@@ -1,0 +1,89 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Streaming
+interface Menu
+class Mainmenu
+class MediaHandler
+class Play
+interface Media
+class Search
+class Movie
+class Series
+class UserHandler
+class FileIO
+interface IO
+interface UI
+class TextUI
+class ExceptionHandler
+class User
+
+Streaming *-- Menu
+
+Menu <|-- "implements" Mainmenu
+Mainmenu *-- UserHandler
+UserHandler *-- User
+Mainmenu *-- MediaHandler
+MediaHandler *-- Play
+MediaHandler *-- Search
+MediaHandler *-- Media
+Media <|-- "implements" Movie
+Media <|-- "implements" Series
+
+IO <|-- "implements" FileIO
+UI <|-- "implements" TextUI
+Mainmenu *-- ExceptionHandler
+Mainmenu *-- IO
+Mainmenu *-- UI
+
+UserHandler : + ArrayList<User> getUsers()
+UserHandler : - void setCurrentUser()
+UserHandler : + User getCurrentUser()
+UserHandler : - ArrayList<User> users
+UserHandler : - User currentUser
+UserHandler : + void login(User user)
+UserHandler : + User registerUser(String name, String password, boolean isAdult)
+UserHandler : - boolean isValidUsername()
+UserHandler : - boolean isValidPassword()
+UserHandler : + boolean currentUserIsAdult()
+UserHandler : + boolean currentUserIsAdmin()
+
+User : - boolean isAdult
+User : - String username
+User : - FINAL int id
+User : - boolean isAdmin
+User : - ArrayList<Media> savedMedia
+User : - ArrayList<Media> watchedMedia
+User : + User(String username, String password, boolean isAdult, boolean isAdmin)
+User : + void setUsername()
+User : + String getUsername()
+User : + int getId()
+User : + ArrayList<Media> getWatchedMedia()
+User : + ArrayList<Media> getSavedMedia()
+User : + boolean getIsAdmin()
+User : + boolean getIsAdult()
+
+MediaHandler : +MediaHandler(currentUser)
+
+
+Menu : + void printMenu(boolean isAdult, boolean isAdmin)
+Menu : + void Exit()
+
+Mainmenu : -UserHandler userHandler
+Mainmenu : + void PrintMenu(boolean isAdult, boolean isAdmin)
+Mainmenu : + void Exit()
+
+TextUI : - Scanner scan
+TextUI : + String getUserInput(String msg)
+TextUI : + String displayMsg(String msg)
+
+IO : + void readData(File file)
+IO : + void writeData(User CurrentUser, File file)
+
+FileIO : - Scanner scan
+FileIO : - File file
+FileIO : + void readData(File file)
+FileIO : + void writeData(User CurrentUser, File file)
+
+
+@enduml
