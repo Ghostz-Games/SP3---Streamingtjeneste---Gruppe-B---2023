@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/object-diagram
+!pragma layout smetana
+
+object Streaming
+object Menu
+object Mainmenu
+object MediaHandler
+object Play
+object Media
+object Search
+object Movie
+object Series
+object UserHandler
+object Login
+object FileIO
+object IO
+object UI
+object TextUI
+object ExceptionHandler
+object User
+
+Streaming *-- Menu
+
+Menu <|-- Mainmenu
+Mainmenu *-- UserHandler
+UserHandler *-- Login
+UserHandler *-- User
+Mainmenu *-- MediaHandler
+MediaHandler *-- Play
+MediaHandler *-- Search
+MediaHandler *-- Media
+Media <|-- Movie
+Media <|-- Series
+
+IO *-- FileIO
+UI *-- TextUI
+Streaming *-- ExceptionHandler
+Streaming *-- IO
+Streaming *-- UI
+
+@enduml
