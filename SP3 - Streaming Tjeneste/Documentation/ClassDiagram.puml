@@ -75,13 +75,14 @@ TextUI : + void printMenu(boolean isAdult, boolean isAdmin)
 TextUI : - ExceptionHandler exceptionHandler
 
 
-IO : + void readData(File file)
-IO : + void writeData(User CurrentUser, File file)
+IO : + List readDataMedia()
+IO : + List readDateUser()
+IO : + void writeData(User CurrentUser)
 
 FileIO : - Scanner scan
 FileIO : - File file
 FileIO : + void readData(File file)
-FileIO : + void writeData(User CurrentUser, File file)
+FileIO : + void writeData(User CurrentUser)
 
 MediaHandler : - ArrayList searchGenre(String)
 MediaHandler : - ArrayList searchName(String)
