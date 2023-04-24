@@ -1,30 +1,36 @@
 package streaming.io;
 
+import javax.imageio.stream.IIOByteBuffer;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileIO implements IO{
-    @Override
-    public ArrayList<String> readDataMedia() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("Data/Media.csv"));
+    private ArrayList<String> read(String filePath) throws FileNotFoundException {
+        Scanner sc = new Scanner(new File(filePath));
         ArrayList<String> output = new ArrayList<>();
         while (sc.hasNextLine()){
             output.add(sc.nextLine());
         }
+        sc.close();
         return output;
+    }
+    @Override
+    public ArrayList<String> readDataMedia() throws FileNotFoundException {
+        return read("Data/Media.csv");
+    }
+
+    @Override
+    public ArrayList<String> readDataSeries() throws FileNotFoundException {
+        return read("Data/Series.csv");
     }
 
     @Override
     public ArrayList<String> readDataUser(User currentUser) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("Data/Users/" + currentUser.getName() + ".csv"));
-        ArrayList<String> output = new ArrayList<>();
-        while (sc.hasNextLine()){
-            output.add(sc.nextLine());
-        }
-        return output;
+        return read("Data/users.csv");
     }
 
     @Override
@@ -35,6 +41,15 @@ public class FileIO implements IO{
         } catch (FileNotFoundException e) {
             Data = new ArrayList<String>();
         }
-        Scanner sc = new Scanner(new File("Data/Users/" + currentUser.getName() + ".csv"));
+        Data.add(currentUser.toString());
+        StringBuilder sb = new StringBuilder();
+        for(String s: Data){
+            sb.append(s + "\n");
+        }
+        try (FileWriter fw = new FileWriter(new File("Data/users.csv"))) {
+            fw.write(sb.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
