@@ -76,13 +76,13 @@ TextUI : - ExceptionHandler exceptionHandler
 
 
 IO : + List readDataMedia()
-IO : + List readDateUser()
-IO : + void writeData(User CurrentUser)
+IO : + List readDataUser(User currentUser)
+IO : + void writeData(User currentUser)
 
 FileIO : - Scanner scan
 FileIO : - File file
 FileIO : + void readData(File file)
-FileIO : + void writeData(User CurrentUser)
+FileIO : + void writeData(User currentUser)
 
 MediaHandler : - ArrayList searchGenre(String)
 MediaHandler : - ArrayList searchName(String)
