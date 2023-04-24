@@ -26,7 +26,9 @@ Media <|--  Series
 IO <|-- "implements" FileIO
 UI <|-- "implements" TextUI
 TextUI *-- ExceptionHandler
-Streaming *-- IO
+UserHandler *-- IO
+MediaHandler *-- IO
+'''Streaming *-- IO
 Streaming *-- UI
 
 UserHandler : + ArrayList<User> getUsers()
@@ -60,13 +62,13 @@ MediaHandler : +MediaHandler(currentUser)
 MediaHandler : - List<Media> media
 MediaHandler : + playMedia(media)
 
-Streaming : -UserHandler userHandler
-Streaming : -MediaHandler mediaHandler
+Streaming : - UserHandler userHandler
+Streaming : - MediaHandler mediaHandler
 Streaming : - UI ui
-Streaming : - IO io
-Streaming : + void Datasetup()
-Streaming : + void MainMenu()
-Streaming : + void Exit()
+'''Streaming : - IO io
+Streaming : + void dataSetup()
+Streaming : + void mainMenu()
+Streaming : + void exit()
 
 TextUI : - Scanner scan
 TextUI : + String getUserInput(String msg)
@@ -75,9 +77,9 @@ TextUI : + void printMenu(boolean isAdult, boolean isAdmin)
 TextUI : - ExceptionHandler exceptionHandler
 
 
-IO : + List readDataMedia()
-IO : + List readDataUser(User currentUser)
-IO : + void writeData(User currentUser)
+IO : + List readDataMedia() throws FileNotFoundException
+IO : + List readDataUser(User currentUser) throws FileNotFoundException
+IO : + void writeDataUser(User currentUser)
 
 UI : + void login()
 UI : + void loginOrRegister()
