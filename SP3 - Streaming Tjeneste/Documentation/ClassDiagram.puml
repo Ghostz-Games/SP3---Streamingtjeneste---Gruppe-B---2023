@@ -1,0 +1,111 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Streaming
+class MediaHandler
+abstract class Media
+class Movie
+class Series
+class UserHandler
+class FileIO
+interface IO
+interface UI
+class TextUI
+class ExceptionHandler
+class User
+
+
+
+Streaming *-- UserHandler
+UserHandler *-- User
+Streaming *-- MediaHandler
+MediaHandler *-- Media
+Media <|--  Movie
+Media <|--  Series
+
+IO <|-- "implements" FileIO
+UI <|-- "implements" TextUI
+TextUI *-- ExceptionHandler
+UserHandler *-- IO
+MediaHandler *-- IO
+'''Streaming *-- IO
+Streaming *-- UI
+
+UserHandler : + ArrayList<User> getUsers()
+UserHandler : - void setCurrentUser(user)
+UserHandler : + User getCurrentUser()
+UserHandler : - ArrayList<User> users
+UserHandler : - User currentUser
+UserHandler : + void login(User user)
+UserHandler : + User registerUser(String name, String password, boolean isAdult)
+UserHandler : - boolean isValidUsername()
+UserHandler : - boolean isValidPassword()
+UserHandler : + boolean currentUserIsAdult()
+UserHandler : + boolean currentUserIsAdmin()
+
+User : - boolean isAdult
+User : - String username
+User : - FINAL int id
+User : - boolean isAdmin
+User : - ArrayList<Media> savedMedia
+User : - ArrayList<Media> watchedMedia
+User : + User(String username, String password, boolean isAdult, boolean isAdmin)
+User : + void setUsername()
+User : + String getUsername()
+User : + int getId()
+User : + ArrayList<Media> getWatchedMedia()
+User : + ArrayList<Media> getSavedMedia()
+User : + boolean getIsAdmin()
+User : + boolean getIsAdult()
+
+MediaHandler : +MediaHandler(currentUser)
+MediaHandler : - List<Media> media
+MediaHandler : + playMedia(media)
+
+Streaming : - UserHandler userHandler
+Streaming : - MediaHandler mediaHandler
+Streaming : - UI ui
+'''Streaming : - IO io
+Streaming : + void dataSetup()
+Streaming : + void mainMenu()
+Streaming : + void exit()
+
+TextUI : - Scanner scan
+TextUI : + String getUserInput(String msg)
+TextUI : + String displayMsg(String msg)
+TextUI : + void printMenu(boolean isAdult, boolean isAdmin)
+TextUI : - ExceptionHandler exceptionHandler
+
+
+IO : + List readDataMedia() throws FileNotFoundException
+IO : + List readDataUser(User currentUser) throws FileNotFoundException
+IO : + void writeDataUser(User currentUser)
+
+UI : + void login()
+UI : + void loginOrRegister()
+UI : + void registerUser()
+UI : + void library()
+UI : + void viewMovie()
+
+FileIO : - Scanner scan
+
+
+MediaHandler : - ArrayList searchGenre(String)
+MediaHandler : - ArrayList searchName(String)
+MediaHandler : - ArrayList searchYear(String)
+MediaHandler : - ArrayList searchRating(float,float)
+MediaHandler : - ArrayList searchMedia(String,String,String,float)
+
+Media : - String name
+Media : - String genre
+Media : - int rating
+
+Series : ArrayList<ArrayList<int>> episodes
+
+Movie : - int lengthOfMovie
+
+Series : - int lengthOfEpisode(PLACEHOLDER)
+
+
+
+@enduml
