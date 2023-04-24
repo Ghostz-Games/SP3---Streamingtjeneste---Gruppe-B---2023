@@ -30,7 +30,7 @@ Streaming *-- IO
 Streaming *-- UI
 
 UserHandler : + ArrayList<User> getUsers()
-UserHandler : - void setCurrentUser()
+UserHandler : - void setCurrentUser(user)
 UserHandler : + User getCurrentUser()
 UserHandler : - ArrayList<User> users
 UserHandler : - User currentUser
@@ -65,7 +65,7 @@ Streaming : -MediaHandler mediaHandler
 Streaming : - UI ui
 Streaming : - IO io
 Streaming : + void Datasetup()
-Streaming : + void Mainmenu()
+Streaming : + void MainMenu()
 Streaming : + void Exit()
 
 TextUI : - Scanner scan
@@ -79,10 +79,14 @@ IO : + List readDataMedia()
 IO : + List readDataUser(User currentUser)
 IO : + void writeData(User currentUser)
 
+UI : + void login()
+UI : + void loginOrRegister()
+UI : + void registerUser()
+UI : + void library()
+UI : + void viewMovie()
+
 FileIO : - Scanner scan
-FileIO : - File file
-FileIO : + void readData(File file)
-FileIO : + void writeData(User currentUser)
+
 
 MediaHandler : - ArrayList searchGenre(String)
 MediaHandler : - ArrayList searchName(String)
