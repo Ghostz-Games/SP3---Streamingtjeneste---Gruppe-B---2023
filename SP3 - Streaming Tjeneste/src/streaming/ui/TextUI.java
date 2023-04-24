@@ -51,7 +51,7 @@ public class TextUI {
 
                     default:
                         System.out.println("not an option try again");
-                        printMenu(userhandler.getCurrentUser().getIsAdult(),userHandler.getCurrentUser().getIsAdmin());
+                        printMenu(Streaming.getCurrentUser().getIsAdult(),userHandler.getCurrentUser().getIsAdmin());
                 }
             }
         }

@@ -7,10 +7,12 @@ import streaming.users.User;
 
 public class Streaming {
 
+    public static FileIO io = new FileIO();
+    public static UserHandler userHandler = new UserHandler(io);
+
     public static void main(String[] args) {
 
-        FileIO io = new FileIO();
-        UserHandler userHandler = new UserHandler(io);
+
         userHandler.registerUser("Lars2", "Coolseeeeeeeeej!", true);
         userHandler.login("Lars2","Coolseeeeeeeeej!");
         MediaHandler mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
@@ -35,4 +37,9 @@ public class Streaming {
 
 
     }
+
+    public static User getCurrentUser(){
+        return userHandler.getCurrentUser();
+    }
+
 }
