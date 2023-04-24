@@ -33,7 +33,7 @@ public abstract class Media {
 
     @Override
     public String toString(){
-        return "Name: "+name+"\n"+"Genre: "+genre+"\n"+"Rating: "+rating+"\n"+"Type of media: "+getClass()+"\n";
+        return "Name: "+name+"\n"+"Year: "+getYear()+"\n"+"Genre: "+genre+"\n"+"Rating: "+rating+"\n"+"Type of media: "+getClass()+"\n";
     }
 
 }

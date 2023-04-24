@@ -1,12 +1,12 @@
 package streaming.io;
 
-import javax.imageio.stream.IIOByteBuffer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import streaming.users.*;
 
 public class FileIO implements IO{
     private ArrayList<String> read(String filePath) throws FileNotFoundException {
@@ -20,12 +20,12 @@ public class FileIO implements IO{
     }
     @Override
     public ArrayList<String> readDataMedia() throws FileNotFoundException {
-        return read("Data/Media.csv");
+        return read("Data/Film.csv");
     }
 
     @Override
     public ArrayList<String> readDataSeries() throws FileNotFoundException {
-        return read("Data/Series.csv");
+        return read("Data/serier.csv");
     }
 
     @Override

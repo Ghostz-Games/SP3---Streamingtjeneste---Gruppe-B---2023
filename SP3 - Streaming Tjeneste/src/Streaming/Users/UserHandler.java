@@ -1,14 +1,21 @@
-package Streaming.Users;
+package streaming.users;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import Streaming.Users.User;
+
+import streaming.io.FileIO;
+import streaming.io.IO;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class UserHandler {
     protected ArrayList<User> users = new ArrayList();
     protected User currentUser;
+
+    private IO io;
+
+    public UserHandler(IO io){
+        this.io = io;
+    }
 
     public ArrayList<User> getUsers(){
         return users;
@@ -22,6 +29,11 @@ public class UserHandler {
     public User getCurrentUser(){
         return currentUser;
     }
+
+    public boolean hasCurrentUser(){
+        return currentUser != null;
+    }
+
     public boolean login(String name,String password){
         for(int i = 0; 0 < users.size();i++){
            if(name.equalsIgnoreCase((users.get(i).getUsername()))){
@@ -43,7 +55,7 @@ public class UserHandler {
         }
     }
     protected boolean isValidUsername(String name){
-        if(name.length() > 3){
+        if(name.length() < 3){
            return false;
         }
         for(int i = 0; 0 < users.size();i++){

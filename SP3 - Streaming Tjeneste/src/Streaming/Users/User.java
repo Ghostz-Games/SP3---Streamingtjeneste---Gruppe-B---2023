@@ -1,6 +1,7 @@
-package Streaming.Users;
+package streaming.users;
 
 import java.util.ArrayList;
+import streaming.mediaHandler.*;
 
 public class User {
     private boolean isAdult = false;
