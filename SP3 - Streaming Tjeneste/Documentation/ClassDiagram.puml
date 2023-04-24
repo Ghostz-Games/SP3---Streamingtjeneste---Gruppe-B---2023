@@ -2,12 +2,8 @@
 'https://plantuml.com/class-diagram
 
 class Streaming
-interface Menu
-class Mainmenu
 class MediaHandler
-class Play
-interface Media
-class Search
+abstract class Media
 class Movie
 class Series
 class UserHandler
@@ -18,23 +14,20 @@ class TextUI
 class ExceptionHandler
 class User
 
-Streaming *-- Menu
 
-Menu <|-- "implements" Mainmenu
-Mainmenu *-- UserHandler
+
+Streaming *-- UserHandler
 UserHandler *-- User
-Mainmenu *-- MediaHandler
-MediaHandler *-- Play
-MediaHandler *-- Search
+Streaming *-- MediaHandler
 MediaHandler *-- Media
-Media <|-- "implements" Movie
-Media <|-- "implements" Series
+Media <|--  Movie
+Media <|--  Series
 
 IO <|-- "implements" FileIO
 UI <|-- "implements" TextUI
-Mainmenu *-- ExceptionHandler
-Mainmenu *-- IO
-Mainmenu *-- UI
+TextUI *-- ExceptionHandler
+Streaming *-- IO
+Streaming *-- UI
 
 UserHandler : + ArrayList<User> getUsers()
 UserHandler : - void setCurrentUser()
@@ -64,18 +57,23 @@ User : + boolean getIsAdmin()
 User : + boolean getIsAdult()
 
 MediaHandler : +MediaHandler(currentUser)
+MediaHandler : - List<Media> media
+MediaHandler : + playMedia(media)
 
-
-Menu : + void printMenu(boolean isAdult, boolean isAdmin)
-Menu : + void Exit()
-
-Mainmenu : -UserHandler userHandler
-Mainmenu : + void PrintMenu(boolean isAdult, boolean isAdmin)
-Mainmenu : + void Exit()
+Streaming : -UserHandler userHandler
+Streaming : -MediaHandler mediaHandler
+Streaming : - UI ui
+Streaming : - IO io
+Streaming : + void Datasetup()
+Streaming : + void Mainmenu()
+Streaming : + void Exit()
 
 TextUI : - Scanner scan
 TextUI : + String getUserInput(String msg)
 TextUI : + String displayMsg(String msg)
+TextUI : + void printMenu(boolean isAdult, boolean isAdmin)
+TextUI : - ExceptionHandler exceptionHandler
+
 
 IO : + void readData(File file)
 IO : + void writeData(User CurrentUser, File file)
@@ -84,6 +82,23 @@ FileIO : - Scanner scan
 FileIO : - File file
 FileIO : + void readData(File file)
 FileIO : + void writeData(User CurrentUser, File file)
+
+MediaHandler : - ArrayList searchGenre(String)
+MediaHandler : - ArrayList searchName(String)
+MediaHandler : - ArrayList searchYear(String)
+MediaHandler : - ArrayList searchRating(float,float)
+MediaHandler : - ArrayList searchMedia(String,String,String,float)
+
+Media : - String name
+Media : - String genre
+Media : - int rating
+
+Series : ArrayList<ArrayList<int>> episodes
+
+Movie : - int lengthOfMovie
+
+Series : - int lengthOfEpisode(PLACEHOLDER)
+
 
 
 @enduml
