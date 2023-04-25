@@ -5,10 +5,12 @@ import streaming.io.FileIO;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import streaming.exceptions.*;
 public class ExceptionHandler {
-
-    public ExceptionHandler(){
-
+    TextUI ui;
+    public ExceptionHandler(TextUI ui){
+        this.ui = ui;
     }
 
 
@@ -16,9 +18,11 @@ public class ExceptionHandler {
 
         String errorHandling = null;
         if(e instanceof FileNotFoundException){
-            errorHandling = "Obi-Wan Kenobi could not find the file";
-        } else {
+            System.out.println(e);
+        } else if (e instanceof InValidPasswordException) {
             errorHandling = " Obi-Wan Kenobi says the passsword or Username is wrong try again";
+        } else if(e instanceof InValidUsername){
+            errorHandli
         }
         return errorHandling;
     }

@@ -1,6 +1,7 @@
 
 import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
+import streaming.ui.ExceptionHandler;
 import streaming.users.UserHandler;
 import streaming.io.FileIO;
 import streaming.users.User;
@@ -10,13 +11,14 @@ public class Streaming {
     public static FileIO io = new FileIO();
     public static UserHandler userHandler = new UserHandler(io);
     public static MediaHandler mediaHandler;
+    public static ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     public static void main(String[] args) {
 
         try {
             userHandler.registerUser("Lars2", "Coolseeeeeeeeej!", true);
         }catch (Exception e){
-
+            exceptionHandler.catchException(e);
         }
         try {
             userHandler.login("Lars2", "Coolseeeeeeeeej!");
