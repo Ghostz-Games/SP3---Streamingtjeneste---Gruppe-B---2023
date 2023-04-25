@@ -29,6 +29,7 @@ public class TextUI {
     }
 
     public String getUserInput(String msg){
+        System.out.println(msg);
         return scan.nextLine();
     }
 
@@ -48,18 +49,24 @@ public class TextUI {
         displayMessage("Press '2' to register a user");
         if(scan.hasNextInt()){
             switch (scan.nextInt()) {
-                case 1 -> loginMenu();
-                case 2 -> registerMenu();
+                case 1 -> {
+                    scan.nextLine();
+                    loginMenu();
+                }
+                case 2 -> {
+                    scan.nextLine();
+                    registerMenu();
+                }
             }
         }
 
     }
 
     private void registerMenu() {
-        displayMessage("Please insert username and password to register a user");
+        //displayMessage("Please insert username and password to register a user");
 
-        String usernameinput = getUserInput("Please write your username:");
-        String passwordinput = getUserInput("Please write your password");
+        String usernameInput = getUserInput("Please write your username:");
+        String passwordInput = getUserInput("Please write your password:");
         String isAdultInput = getUserInput("Is the created user over the age of 18? Y/N");
         boolean isAdult = false;
 
@@ -68,7 +75,7 @@ public class TextUI {
         }
         
         try {
-            userHandler.registerUser(usernameinput, passwordinput, isAdult);
+            userHandler.registerUser(usernameInput, passwordInput, isAdult);
         }catch(Exception e){
             exceptionHandler.catchException(e);
             registerMenu();
@@ -94,7 +101,7 @@ public class TextUI {
 
     public void printMenu(){
         if(isAdult && !isAdmin){
-            this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select on of the options below");
+            this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select one of the options below");
             this.displayMessage("--------------------------------------");
             this.displayMessage("-1.play movie");
             this.displayMessage("-2.search for movie");
@@ -178,13 +185,14 @@ public class TextUI {
             System.out.println("-5. start search");
             System.out.println("-0. return to main menu");
             if (scan.hasNextInt()) {
-                switch (scan.nextInt()) {
+                int lineInt = scan.nextInt();
+                scan.nextLine();
+                switch (lineInt) {
                     case 1:
                         System.out.println("please type the name you want to search for:");
                         if (scan.hasNextLine()) {
                             name = scan.nextLine();
                         }
-                        searchMovieMenu();
                         break;
 
                     case 2:
@@ -193,7 +201,6 @@ public class TextUI {
                         if (scan.hasNextLine()) {
                             genre = scan.nextLine();
                         }
-                        searchMovieMenu();
                         break;
 
                     case 3:
@@ -202,7 +209,6 @@ public class TextUI {
                         if (scan.hasNextLine()) {
                             year = scan.nextLine();
                         }
-                        searchMovieMenu();
                         break;
 
                     case 4:
@@ -216,7 +222,6 @@ public class TextUI {
                             if (scan.hasNextFloat()) {
                                 maxRating = scan.nextFloat();
                                 scan.nextLine();
-                                searchMovieMenu();
                             }
 
                         }
@@ -224,11 +229,14 @@ public class TextUI {
 
                     case 5:
                         System.out.println(mediaHandler.searchMedia(name, genre, year, minRating, maxRating));
+                        exit = true;
                         break;
+
                     case 0:
                         exit = true;
                         printMenu();
                         break;
+
                     default:
                         System.out.println("not an option try again");
                 }
@@ -238,19 +246,10 @@ public class TextUI {
     public void seeListOfWatchedMovies(){
         System.out.println("here is your watched media:");
         System.out.println(userHandler.getCurrentUser().getWatchedMedia());
-        System.out.println("do you want to return to main menu? y/n?");
+        System.out.println("enter to return to main menu...");
         if(scan.hasNextLine()){
-            switch (scan.nextLine()){
-                case "y":
-                    printMenu();
-                    break;
-                case "n":
-                    seeListOfWatchedMovies();
-                    break;
-                default:
-                    System.out.println("not an option try again");
-                    seeListOfWatchedMovies();
-            }
+            scan.nextLine();
+            printMenu();
         }
     }
 }

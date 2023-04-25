@@ -30,24 +30,23 @@ public class Streaming {
         }
 
         mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
-        textUI = new TextUI(userHandler, mediaHandler);
 
         try {
-
             mediaHandler.loadMovies();
             mediaHandler.loadSeries();
-
-//            for(Media m : mediaHandler.getMedia()){
-//                textUI.displayMessage(m.toString());
-//            }
-
         }catch(Exception e){
-
             exceptionHandler.catchException(e);
-
         }
+        ////Debugging
         System.out.println(userHandler.getUsers());
         System.out.println(userHandler.getCurrentUser());
+
+
+        textUI = new TextUI(userHandler, mediaHandler);
+        textUI.welcomeWindow();
+        textUI.settings(getCurrentUser().isAdult(), getCurrentUser().isAdmin());
+        textUI.printMenu();
+
     }
 
     public static User getCurrentUser(){
