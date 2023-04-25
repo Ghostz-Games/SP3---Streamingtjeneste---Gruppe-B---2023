@@ -62,7 +62,8 @@ User : + boolean getIsAdult()
 
 MediaHandler : +MediaHandler(currentUser)
 MediaHandler : - List<Media> media
-MediaHandler : + playMedia(media)
+MediaHandler : + Media currentMedia
+MediaHandler : + playMedia(Media)
 MediaHandler : + IO io
 
 
