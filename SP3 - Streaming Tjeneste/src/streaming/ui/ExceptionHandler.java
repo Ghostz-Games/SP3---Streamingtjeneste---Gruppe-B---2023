@@ -17,7 +17,7 @@ public class ExceptionHandler {
         String errorHandling = null;
         if(e instanceof FileNotFoundException){
             errorHandling = "Obi-Wan Kenobi could not find the file";
-        } else if (e instanceof Streaming.Users.UserHandler) {
+        } else {
             errorHandling = " Obi-Wan Kenobi says the passsword or Username is wrong try again";
         }
         return errorHandling;

@@ -23,7 +23,7 @@ public class Streaming {
         }catch (Exception e){
 
         }
-        
+
         MediaHandler mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
         try {
 
