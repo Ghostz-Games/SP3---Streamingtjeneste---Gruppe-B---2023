@@ -13,9 +13,17 @@ public class Streaming {
 
     public static void main(String[] args) {
 
+        try {
+            userHandler.registerUser("Lars2", "Coolseeeeeeeeej!", true);
+        }catch (Exception e){
 
-        userHandler.registerUser("Lars3", "TCoolseeeeeeeeej!", true);
-        userHandler.login("Lars3","TCoolseeeeeeeeej!");
+        }
+        try {
+            userHandler.login("Lars2", "Coolseeeeeeeeej!");
+        }catch (Exception e){
+
+        }
+
         MediaHandler mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
         try {
 
