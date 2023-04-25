@@ -4,35 +4,55 @@ import streaming.mediaHandler.MediaHandler;
 import streaming.users.UserHandler;
 import streaming.io.FileIO;
 import streaming.users.User;
+import streaming.ui.TextUI;
+
 
 public class Streaming {
 
     public static FileIO io = new FileIO();
     public static UserHandler userHandler = new UserHandler(io);
     public static MediaHandler mediaHandler;
+    public static TextUI textUI;
 
     public static void main(String[] args) {
 
+        try {
+            userHandler.registerUser("Lars2", "Coolseeeeeeeeej!", true);
+            userHandler.registerUser("Jens4", "Bananaaaaaaaaaa?", true);
+        }catch (Exception e){
 
-        userHandler.registerUser("Lars3", "TCoolseeeeeeeeej!", true);
-        userHandler.login("Lars3","TCoolseeeeeeeeej!");
-        MediaHandler mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
+        }
+        try {
+            userHandler.login("Lars2", "Coolseeeeeeeeej!");
+            userHandler.login("Jens4", "Bananaaaaaaaaaa?");
+        }catch (Exception e){
+
+        }
+
+        mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
+        textUI = new TextUI(userHandler, mediaHandler);
         try {
 
             mediaHandler.loadMovies();
             mediaHandler.loadSeries();
 
             for(Media m : mediaHandler.getMedia()){
-                System.out.println(m);
+                textUI.displayMessage(m.toString());
             }
 
         }catch(Exception e){
 
-            System.out.println(e);
+            textUI.displayMessage(e.toString());
 
         }
+<<<<<<< HEAD
         System.out.println(userHandler.getUsers());
         System.out.println(userHandler.getCurrentUser());
+=======
+        textUI.displayMessage(userHandler.getUsers().toString());
+        textUI.displayMessage(userHandler.getCurrentUser().getUsername());
+        io.writeDataUser(userHandler.getCurrentUser());
+>>>>>>> main
     }
 
     public static User getCurrentUser(){

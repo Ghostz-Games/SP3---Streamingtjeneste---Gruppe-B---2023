@@ -88,6 +88,9 @@ public class User {
             }
         }
         output += ";";
+        /*StringBuilder sb1 = new StringBuilder();
+        sb1.append(username+";");*/
+
         return output;
     }
     @Override

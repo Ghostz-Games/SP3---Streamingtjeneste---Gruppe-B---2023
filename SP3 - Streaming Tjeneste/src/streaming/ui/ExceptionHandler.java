@@ -17,8 +17,13 @@ public class ExceptionHandler {
         String errorHandling = null;
         if(e instanceof FileNotFoundException){
             errorHandling = "Obi-Wan Kenobi could not find the file";
+<<<<<<< HEAD
 //        } else if (e) {
 //            errorHandling = " Obi-Wan Kenobi says the passsword or Username is wrong try again";
+=======
+        } else {
+            errorHandling = " Obi-Wan Kenobi says the passsword or Username is wrong try again";
+>>>>>>> main
         }
         return errorHandling;
     }

@@ -38,6 +38,7 @@ public class UserHandler {
         this.currentUser = user;
     }
     public User getCurrentUser(){
+
         return currentUser;
     }
 
@@ -45,18 +46,23 @@ public class UserHandler {
         return currentUser != null;
     }
 
-    public boolean login(String name,String password){
-        for(int i = 0; 0 < users.size();i++){
-           if(name.equalsIgnoreCase((users.get(i).getUsername()))){
-               if(password.equals(users.get(i).getPassword())){
-                   setCurrentUser(getUser(i));
-                   return true;
-               }
+        public boolean login (String name, String password)throws Exception{
+        /*try {*/
+            for (int i = 0; 0 < users.size(); i++) {
+                if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
+                    if (password.equals(users.get(i).getPassword())) {
+                        setCurrentUser(getUser(i));
+                        return true;
+                    }
+                }
             }
-        }
-        return false;
+            return false;
+     /*   }catch (Exception e){
+            throw new IllegalArgumentException();
+        }*/
     }
-    public void registerUser(String name,String password,boolean isAdult){
+
+    public void registerUser(String name,String password,boolean isAdult)throws Exception{
         boolean isAdmin = false;
         if(isValidUsername(name)){
             if(users.contains(name)){
@@ -107,7 +113,4 @@ public class UserHandler {
     public boolean currentUserIsAdmin(){
         return this.currentUser.isAdmin();
     }
-
-
-
 }
