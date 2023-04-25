@@ -33,7 +33,6 @@ public class Streaming {
         }
         System.out.println(userHandler.getUsers());
         System.out.println(userHandler.getCurrentUser());
-        io.writeDataUser(userHandler.getCurrentUser());
     }
 
     public static User getCurrentUser(){

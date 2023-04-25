@@ -7,6 +7,6 @@ import streaming.users.*;
 public interface IO {
     ArrayList<String> readDataMedia() throws IOException;
     ArrayList<String> readDataSeries() throws IOException;
-    ArrayList<String> readDataUser(User currentUser) throws IOException;
+    ArrayList<String> readDataUser() throws IOException;
     void writeDataUser(User currentUser);
 }

@@ -9,16 +9,27 @@ public class User {
     private String username;
     private String password;
     private final int id;
-    private ArrayList<Media> savedMedia;
-    private ArrayList<Media> watchedMedia;
-    User(String username,String password,boolean isAdult,boolean isAdmin){
-        int countID = 1;
+    private ArrayList<String> savedMedia = new ArrayList<>();
+    private ArrayList<String> watchedMedia = new ArrayList<>();
+    private static int countID = 1;
+    User(String username,String password,boolean isAdult,boolean isAdmin, String saved, String watched){
         this.username = username;
         this.password = password;
         this.isAdult = isAdult;
         this.isAdmin = isAdmin;
         this.id = countID;
-        countID++;
+        ++countID;
+        String[] splitSaved = saved.split(",");
+        for(String s: splitSaved){
+            addSavedMedia(s);
+        }
+        String[] splitWatched = saved.split(",");
+        for(String s: splitWatched){
+            addWatchedMedia(s);
+        }
+    }
+    User(String username,String password,boolean isAdult,boolean isAdmin){
+        this(username, password, isAdult,isAdmin,"","");
     }
     public boolean isAdult() {
         return isAdult;
@@ -39,18 +50,18 @@ public class User {
         return id;
     }
 
-    public ArrayList<Media> getSavedMedia() {
+    public ArrayList<String> getSavedMedia() {
         return savedMedia;
     }
 
-    public ArrayList<Media> getWatchedMedia() {
+    public ArrayList<String> getWatchedMedia() {
         return watchedMedia;
     }
 
-    public void addSavedMedia(Media media){
+    public void addSavedMedia(String media){
         savedMedia.add(media);
     }
-    public void addWatchedMedia(Media media){
+    public void addWatchedMedia(String media){
         watchedMedia.add(media);
     }
     protected void setUsername(String name){
@@ -64,14 +75,14 @@ public class User {
         output += isAdult+";";
         output += isAdmin+";";
         for(int i = 0; i < savedMedia.size();i++){
-            output += savedMedia.get(i).getName();
+            output += savedMedia.get(i);
             if(i < savedMedia.size()-1){
                 output += ",";
             }
         }
         output += ";";
         for(int i = 0; i < watchedMedia.size();i++){
-            output += watchedMedia.get(i).getName();
+            output += watchedMedia.get(i);
             if(i < savedMedia.size()-1){
                 output += ",";
             }
@@ -79,10 +90,9 @@ public class User {
         output += ";";
         return output;
     }
-
     @Override
     public String toString(){
-        return getId() + ";" + getUsername() + ";" + getPassword() + ";" + MediaHandler.InlineListString(getSavedMedia()) + ";" + MediaHandler.InlineListString(getWatchedMedia());
+        return getId() + ":" + getUsername();
     }
 }
 

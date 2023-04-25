@@ -1,8 +1,11 @@
 package streaming.users;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import streaming.io.IO;
+import streaming.ui.ExceptionHandler;
 
 import java.util.ArrayList;
 
@@ -12,8 +15,17 @@ public class UserHandler {
 
     private IO io;
 
-    public UserHandler(IO io){
+    public UserHandler(IO io)  {
         this.io = io;
+        try {
+            ArrayList<String> userString = io.readDataUser();
+            for (String s: userString) {
+                String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
+                users.add(new User(splitS[0], splitS[1],splitS[3].equals("true"),splitS[4].equals("true"),splitS[5],splitS[6]));
+            }
+        } catch (IOException e) {
+            //Exception call goes here.
+        }
     }
 
     public ArrayList<User> getUsers(){
@@ -47,9 +59,14 @@ public class UserHandler {
     public void registerUser(String name,String password,boolean isAdult){
         boolean isAdmin = false;
         if(isValidUsername(name)){
+            if(users.contains(name)){
+                //exception handler message here.
+                return;
+            }
             if(isValidPassword(password)){
                 User user = new User(name,password,isAdult,isAdmin);
                 users.add(user);
+                io.writeDataUser(user);
             }
         }
     }
