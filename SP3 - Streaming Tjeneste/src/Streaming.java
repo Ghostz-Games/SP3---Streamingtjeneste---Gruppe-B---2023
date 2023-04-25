@@ -31,6 +31,7 @@ public class Streaming {
 
         mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
         textUI = new TextUI(userHandler, mediaHandler);
+
         try {
 
             mediaHandler.loadMovies();
