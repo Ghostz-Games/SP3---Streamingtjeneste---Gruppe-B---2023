@@ -1,6 +1,7 @@
 package streaming.ui;
 import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
+import streaming.users.User;
 import streaming.users.UserHandler;
 
 import java.util.Scanner;
@@ -24,9 +25,9 @@ public class TextUI implements UI {
 
     }
 
-    public void settings(boolean adult, boolean admin) {
-        isAdult = adult;
-        isAdmin = admin;
+    public void settings(User user) {
+        isAdult = user.isAdult();
+        isAdmin = user.isAdmin();
     }
 
     public String getUserInput(String msg){
