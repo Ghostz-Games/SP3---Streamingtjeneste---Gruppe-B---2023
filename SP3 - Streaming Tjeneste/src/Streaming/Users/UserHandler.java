@@ -70,7 +70,7 @@ public class UserHandler {
         }
     }
     protected boolean isValidUsername(String name) throws InValidUsername{
-        if(name.length() < 3){
+        if(name.length() <= 3){
            throw new InValidUsername("invalid Username; must be longer than 3");
         }
         if(!users.isEmpty()) {
@@ -84,10 +84,10 @@ public class UserHandler {
     }
     protected boolean isValidPassword(String password) throws InValidPasswordException{
         // tjeks if password contrain atleast 1 special char and 1 upper and lower letter
-        Pattern rgSpecial = Pattern.compile("[!#¤%&/?+*0-9]+");
-        Pattern rgUpper = Pattern.compile("[A-Z]");
-        Pattern rgLower = Pattern.compile("[a-z]");
-        Pattern rgNonValids = Pattern.compile("[^a-zA-Z!#¤%&/?+*0-9]");
+        Pattern rgSpecial = Pattern.compile("[!#¤%&/?+*]+"); //// At least 1 Special
+        Pattern rgUpper = Pattern.compile("[A-Z]"); //// At least 1 Uppercase
+        Pattern rgLower = Pattern.compile("[a-z]"); //// At least 1 Lowercase
+        Pattern rgNonValids = Pattern.compile("[^a-zA-Z!#¤%&/?+*0-9]"); //// Allowed signs
         Matcher mtSpecial = rgSpecial.matcher(password);
         Matcher mtUpper = rgUpper.matcher(password);
         Matcher mtLower = rgLower.matcher(password);
