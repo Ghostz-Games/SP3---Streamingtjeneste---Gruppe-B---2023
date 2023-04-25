@@ -36,7 +36,13 @@ public class TextUI implements UI {
     }
 
     public int getUserInputInt(){
-        return scan.nextInt();
+        int scanInt;
+        if(scan.hasNextInt()){
+            scanInt = scan.nextInt();
+            scan.nextLine();
+            return scanInt;
+        }
+        return -1;
     }
 
     public void displayMessage(String msg){
