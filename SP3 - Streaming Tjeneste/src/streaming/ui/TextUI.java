@@ -214,20 +214,13 @@ public class TextUI {
 
                     case 5:
                         System.out.println(mediaHandler.searchMedia(name, genre, year, minRating, maxRating));
-
                         break;
-
                     case 0:
                         exit = true;
                         printMenu();
-                        //printMenu(userHandler.getCurrentUser().isAdult(), userHandler.getCurrentUser().isAdmin());
-                        break;
-                    case 6:
-                        System.out.println("name "+ name+ " genre :"+ genre+ " year "+ year+ " min rating: " +minRating + " max rating: "+maxRating);
                         break;
                     default:
                         System.out.println("not an option try again");
-                        searchMovieMenu();
                 }
             }
         }
