@@ -25,7 +25,8 @@ Media <|--  Series
 
 IO <|-- "implements" FileIO
 UI <|-- "implements" TextUI
-TextUI *-- ExceptionHandler
+ExceptionHandler *-- UI
+Streaming *-- ExceptionHandler
 UserHandler *-- IO
 MediaHandler *-- IO
 '''Streaming *-- IO

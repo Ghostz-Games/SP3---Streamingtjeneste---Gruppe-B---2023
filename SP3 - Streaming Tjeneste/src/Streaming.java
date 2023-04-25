@@ -36,18 +36,17 @@ public class Streaming {
             mediaHandler.loadMovies();
             mediaHandler.loadSeries();
 
-            for(Media m : mediaHandler.getMedia()){
-                textUI.displayMessage(m.toString());
-            }
+//            for(Media m : mediaHandler.getMedia()){
+//                textUI.displayMessage(m.toString());
+//            }
 
         }catch(Exception e){
 
             exceptionHandler.catchException(e);
 
         }
-        textUI.displayMessage(userHandler.getUsers().toString());
-        textUI.displayMessage(userHandler.getCurrentUser().getUsername());
-        io.writeDataUser(userHandler.getCurrentUser());
+        System.out.println(userHandler.getUsers());
+        System.out.println(userHandler.getCurrentUser());
     }
 
     public static User getCurrentUser(){

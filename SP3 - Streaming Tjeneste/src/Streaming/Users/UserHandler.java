@@ -1,8 +1,11 @@
 package streaming.users;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import streaming.io.IO;
+import streaming.ui.ExceptionHandler;
 
 import java.util.ArrayList;
 
@@ -12,8 +15,17 @@ public class UserHandler {
 
     private IO io;
 
-    public UserHandler(IO io){
+    public UserHandler(IO io)  {
         this.io = io;
+        try {
+            ArrayList<String> userString = io.readDataUser();
+            for (String s: userString) {
+                String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
+                users.add(new User(splitS[0], splitS[1],splitS[3].equals("true"),splitS[4].equals("true"),splitS[5],splitS[6]));
+            }
+        } catch (IOException e) {
+            //Exception call goes here.
+        }
     }
 
     public ArrayList<User> getUsers(){
@@ -36,10 +48,10 @@ public class UserHandler {
 
         public boolean login (String name, String password)throws Exception{
         /*try {*/
-            for (int i = 0; 0 < users.size(); i++) {
-                if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
-                    if (password.equals(users.get(i).getPassword())) {
-                        setCurrentUser(getUser(i));
+            for (User u: users) {
+                if (name.equals(u.getUsername())) {
+                    if (password.equals(u.getPassword())) {
+                        setCurrentUser(u);
                         return true;
                     }
                 }
@@ -56,6 +68,7 @@ public class UserHandler {
             if(isValidPassword(password)){
                 User user = new User(name,password,isAdult,isAdmin);
                 users.add(user);
+                io.writeDataUser(user);
             }
         }
     }
@@ -63,7 +76,7 @@ public class UserHandler {
         if(name.length() < 3){
            return false;
         }
-        for(int i = 0; 0 < users.size();i++){
+        for(int i = 0; i < users.size();i++){
             if(name.equalsIgnoreCase((users.get(i).getUsername()))){
                 return false;
                 }
