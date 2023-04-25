@@ -81,7 +81,7 @@ public class UserHandler {
         return true;
     }
     protected boolean isValidPassword(String password) throws InValidPasswordException{
-        // tjeks if password contrain atleast 1 special char and 1 upper and lower letter
+        // Checks if password contains at least 1 special, 1 upper and lower letter and only valid characters.
         Pattern rgSpecial = Pattern.compile("[!#¤%&/?+*]+"); //// At least 1 Special
         Pattern rgUpper = Pattern.compile("[A-Z]"); //// At least 1 Uppercase
         Pattern rgLower = Pattern.compile("[a-z]"); //// At least 1 Lowercase

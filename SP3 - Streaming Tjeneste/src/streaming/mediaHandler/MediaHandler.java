@@ -14,7 +14,7 @@ public class MediaHandler {
     private User currentUser;
     private IO io;
 
-    public MediaHandler(FileIO io,User currentUser){
+    public MediaHandler(IO io,User currentUser){
         this.io = io;
         this.currentUser = currentUser;
     }
