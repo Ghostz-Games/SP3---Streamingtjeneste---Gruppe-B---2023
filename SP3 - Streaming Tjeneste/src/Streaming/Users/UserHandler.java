@@ -96,7 +96,4 @@ public class UserHandler {
     public boolean currentUserIsAdmin(){
         return this.currentUser.isAdming();
     }
-
-
-
 }
