@@ -68,10 +68,10 @@ public class MediaHandler {
 
 
     public ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
-        ArrayList<Media> output = new ArrayList<>();
+        ArrayList<Media> output = getMedia();
 
         if(name != null){
-            for(int i = output.size() ; i >= 0; i--){
+            for(int i = output.size() - 1 ; i >= 0; i--){
                 if(!output.get(i).getName().contains(name)){
                     output.remove(i);
                 }
@@ -79,7 +79,7 @@ public class MediaHandler {
         }
 
         if(genre != null){
-            for(int i = output.size() ; i >= 0; i--){
+            for(int i = output.size() - 1 ; i >= 0; i--){
                 if(!output.get(i).getGenre().contains(genre)){
                     output.remove(i);
                 }
@@ -87,7 +87,7 @@ public class MediaHandler {
         }
 
         if(year != null){
-            for(int i = output.size() ; i >= 0; i--){
+            for(int i = output.size() - 1 ; i >= 0; i--){
                 if(!output.get(i).getYear().contains(genre)){
                     output.remove(i);
                 }
@@ -95,7 +95,7 @@ public class MediaHandler {
         }
 
         if(min != 0){
-            for(int i = output.size() ; i >= 0; i--){
+            for(int i = output.size() - 1 ; i >= 0; i--){
                 if(output.get(i).getRating() < min){
                     output.remove(i);
                 }
@@ -103,7 +103,7 @@ public class MediaHandler {
         }
 
         if(max != 0){
-            for(int i = output.size() ; i >= 0; i--){
+            for(int i = output.size() - 1 ; i >= 0; i--){
                 if(output.get(i).getRating() > max){
                     output.remove(i);
                 }

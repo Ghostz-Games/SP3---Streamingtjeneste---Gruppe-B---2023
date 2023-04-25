@@ -98,7 +98,7 @@ MediaHandler : - ArrayList searchGenre(String)
 MediaHandler : - ArrayList searchName(String)
 MediaHandler : - ArrayList searchYear(String)
 MediaHandler : - ArrayList searchRating(float,float)
-MediaHandler : - ArrayList searchMedia(String,String,String,float)
+MediaHandler : - ArrayList searchMedia(String,String,String,float, float)
 
 Media : - String name
 Media : - String genre
