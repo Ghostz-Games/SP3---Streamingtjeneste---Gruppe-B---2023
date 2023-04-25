@@ -18,19 +18,10 @@ public class Streaming {
 
     public static void main(String[] args) {
 
-        try {
-            userHandler.registerUser("Lars2", "Coolseeeeeeeeej!", true);
-        }catch (Exception e){
-            exceptionHandler.catchException(e);
-        }
-        try {
-            userHandler.login("Lars2", "Coolseeeeeeeeej!");
-        }catch (Exception e){
-            exceptionHandler.catchException(e);
-        }
 
         mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
         textUI = new TextUI(userHandler, mediaHandler);
+        textUI.welcomeWindow();
         try {
 
             mediaHandler.loadMovies();
