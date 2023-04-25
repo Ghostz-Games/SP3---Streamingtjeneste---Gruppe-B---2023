@@ -1,20 +1,19 @@
 package streaming.ui;
 
-<<<<<<< HEAD
+
 import streaming.io.FileIO;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-=======
->>>>>>> 241397537851f18e3791a55f90a0b06465ec0b35
+
 public class ExceptionHandler {
 
     public ExceptionHandler(){
 
     }
 
-<<<<<<< HEAD
+
     public String catchException(Exception e){
 
         String errorHandling = null;
@@ -27,6 +26,4 @@ public class ExceptionHandler {
     }
 
 
-=======
->>>>>>> 241397537851f18e3791a55f90a0b06465ec0b35
 }

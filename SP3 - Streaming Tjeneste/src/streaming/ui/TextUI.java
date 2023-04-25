@@ -6,11 +6,9 @@ import java.util.Scanner;
 public class TextUI {
 
     private Scanner scan;
-<<<<<<< HEAD
+
     private ExceptionHandler exceptionHandler = new ExceptionHandler();
-=======
-    private ExceptionHandler exceptionHandler;
->>>>>>> 241397537851f18e3791a55f90a0b06465ec0b35
+
 
     TextUI(){
 
@@ -55,11 +53,13 @@ public class TextUI {
 
                     default:
                         System.out.println("not an option try again");
-<<<<<<< HEAD
+
                         printMenu(streaming.Users.userHandler.getCurrentUser().getIsAdult(),userHandler.getCurrentUser().getIsAdmin());
-=======
+
                         printMenu(userhandler.getCurrentUser().getIsAdult(),userHandler.getCurrentUser().getIsAdmin());
->>>>>>> 241397537851f18e3791a55f90a0b06465ec0b35
+
+                        printMenu(userhandler.getCurrentUser().getIsAdult(),userHandler.getCurrentUser().getIsAdmin());
+
                 }
             }
         }
