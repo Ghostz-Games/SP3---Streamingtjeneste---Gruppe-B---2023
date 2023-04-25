@@ -39,17 +39,18 @@ public class FileIO implements IO{
         try {
             Data = readDataUser();
         } catch (FileNotFoundException e) {
-            Data = new ArrayList<String>();
+            Data = new ArrayList<>();
         }
         Data.add(currentUser.saveUserData());
         StringBuilder sb = new StringBuilder();
         for(String s: Data){
-            sb.append(s + "\n");
+            sb.append(s).append("\n");
         }
-        try (FileWriter fw = new FileWriter(new File("Data/users.csv"))) {
+        try (FileWriter fw = new FileWriter("Data/users.csv")) {
             fw.write(sb.toString());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            //Exception handler goes here.
+            //Couldn't write to file.
         }
     }
 }

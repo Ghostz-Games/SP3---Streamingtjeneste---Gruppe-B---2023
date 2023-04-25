@@ -19,9 +19,7 @@ public class ExceptionHandler {
         String errorHandling = null;
         if (e instanceof FileNotFoundException) {
             System.out.println("File not Found");
-        }/* else if (e instanceof Exception) {
-            System.out.println(e.getMessage());
-        }*/else if (e instanceof InValidPasswordException) {
+        }else if (e instanceof InValidPasswordException) {
             System.out.println(e.getMessage());
         } else if(e instanceof InValidUsername){
             System.out.println(e.getMessage());
