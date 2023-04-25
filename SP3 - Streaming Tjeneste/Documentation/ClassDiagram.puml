@@ -42,6 +42,7 @@ UserHandler : - boolean isValidUsername()
 UserHandler : - boolean isValidPassword()
 UserHandler : + boolean currentUserIsAdult()
 UserHandler : + boolean currentUserIsAdmin()
+UserHandler : + IO io
 
 User : - boolean isAdult
 User : - String username
@@ -61,6 +62,8 @@ User : + boolean getIsAdult()
 MediaHandler : +MediaHandler(currentUser)
 MediaHandler : - List<Media> media
 MediaHandler : + playMedia(media)
+MediaHandler : + IO io
+
 
 Streaming : - UserHandler userHandler
 Streaming : - MediaHandler mediaHandler
