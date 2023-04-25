@@ -25,9 +25,9 @@ public class ExceptionHandler {
             System.out.println(e.getMessage());
         } else if(e instanceof InValidUsername){
             System.out.println(e.getMessage());
+        } else if(e instanceof InValidUsernameOrPasswordException){
+            System.out.println(e.getMessage());
         }
         //System.out.println(e.getMessage());
     }
-
-
     }
