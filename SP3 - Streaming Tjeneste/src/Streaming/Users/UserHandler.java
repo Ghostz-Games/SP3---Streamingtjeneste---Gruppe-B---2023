@@ -48,10 +48,10 @@ public class UserHandler {
 
         public boolean login (String name, String password)throws Exception{
         /*try {*/
-            for (int i = 0; 0 < users.size(); i++) {
-                if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
-                    if (password.equals(users.get(i).getPassword())) {
-                        setCurrentUser(getUser(i));
+            for (User u: users) {
+                if (name.equals(u.getUsername())) {
+                    if (password.equals(u.getPassword())) {
+                        setCurrentUser(u);
                         return true;
                     }
                 }
@@ -65,10 +65,6 @@ public class UserHandler {
     public void registerUser(String name,String password,boolean isAdult)throws Exception{
         boolean isAdmin = false;
         if(isValidUsername(name)){
-            if(users.contains(name)){
-                //exception handler message here.
-                return;
-            }
             if(isValidPassword(password)){
                 User user = new User(name,password,isAdult,isAdmin);
                 users.add(user);
@@ -80,7 +76,7 @@ public class UserHandler {
         if(name.length() < 3){
            return false;
         }
-        for(int i = 0; 0 < users.size();i++){
+        for(int i = 0; i < users.size();i++){
             if(name.equalsIgnoreCase((users.get(i).getUsername()))){
                 return false;
                 }

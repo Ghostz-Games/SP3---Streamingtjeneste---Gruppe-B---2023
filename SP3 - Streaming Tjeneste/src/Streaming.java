@@ -20,11 +20,11 @@ public class Streaming {
             userHandler.registerUser("Lars2", "Coolseeeeeeeeej!", true);
             userHandler.registerUser("Jens4", "Bananaaaaaaaaaa?", true);
         }catch (Exception e){
-
+            System.out.print(e);
         }
         try {
-            userHandler.login("Lars2", "Coolseeeeeeeeej!");
-            userHandler.login("Jens4", "Bananaaaaaaaaaa?");
+            System.out.println(userHandler.login("Lars2", "Coolseeeeeeeeej!"));
+            System.out.println(userHandler.login("Jens4", "Bananaaaaaaaaaa?"));
         }catch (Exception e){
 
         }
@@ -36,23 +36,17 @@ public class Streaming {
             mediaHandler.loadMovies();
             mediaHandler.loadSeries();
 
-            for(Media m : mediaHandler.getMedia()){
-                textUI.displayMessage(m.toString());
-            }
+//            for(Media m : mediaHandler.getMedia()){
+//                textUI.displayMessage(m.toString());
+//            }
 
         }catch(Exception e){
 
             textUI.displayMessage(e.toString());
 
         }
-<<<<<<< HEAD
         System.out.println(userHandler.getUsers());
         System.out.println(userHandler.getCurrentUser());
-=======
-        textUI.displayMessage(userHandler.getUsers().toString());
-        textUI.displayMessage(userHandler.getCurrentUser().getUsername());
-        io.writeDataUser(userHandler.getCurrentUser());
->>>>>>> main
     }
 
     public static User getCurrentUser(){
