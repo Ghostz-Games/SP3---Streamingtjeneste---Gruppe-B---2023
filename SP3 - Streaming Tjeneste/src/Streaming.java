@@ -47,8 +47,7 @@ public class Streaming {
         textUI = new TextUI(userHandler, mediaHandler);
         textUI.loginOrRegister();
         textUI.settings(getCurrentUser());
-        textUI.library();
-
+        textUI.MainMenu();
     }
 
     public static User getCurrentUser(){
