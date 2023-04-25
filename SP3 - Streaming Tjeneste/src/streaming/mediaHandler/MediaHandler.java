@@ -69,7 +69,7 @@ public class MediaHandler {
     }
 
 
-    private ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
+    public ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
         ArrayList<Media> output = new ArrayList<>();
 
         if(name != null){
@@ -132,5 +132,15 @@ public class MediaHandler {
         return searchMedia(null, null, null, a, b);
     }
 
+    public static String InlineListString(ArrayList<Media> liste){
+        if(liste == null){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Media m: liste) {
+            sb.append(m.getName());
+        }
+        return sb.toString();
+    }
 
 }
