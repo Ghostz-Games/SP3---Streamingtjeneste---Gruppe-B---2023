@@ -9,6 +9,7 @@ public class Streaming {
 
     public static FileIO io = new FileIO();
     public static UserHandler userHandler = new UserHandler(io);
+    public static MediaHandler mediaHandler;
 
     public static void main(String[] args) {
 
@@ -22,6 +23,7 @@ public class Streaming {
         }catch (Exception e){
 
         }
+        
         MediaHandler mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
         try {
 
@@ -40,9 +42,6 @@ public class Streaming {
         System.out.println(userHandler.getUsers());
         System.out.println(userHandler.getCurrentUser());
         io.writeDataUser(userHandler.getCurrentUser());
-
-
-
     }
 
     public static User getCurrentUser(){

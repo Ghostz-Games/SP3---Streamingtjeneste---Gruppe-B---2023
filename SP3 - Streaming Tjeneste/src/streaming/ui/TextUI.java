@@ -1,17 +1,31 @@
 package streaming.ui;
 import streaming.mediaHandler.MediaHandler;
+import streaming.users.UserHandler;
 
 import java.util.Scanner;
 
 public class TextUI {
 
     private Scanner scan;
-    private ExceptionHandler exceptionHandler;
+    private ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private UserHandler userHandler;
+    private MediaHandler mediaHandler;
+    private boolean isAdult = false;
+    private boolean isAdmin = false;
 
-    TextUI(){
+    TextUI(UserHandler userHandler, MediaHandler mediaHandler){
+
+        this.userHandler = userHandler;
+
+        this.mediaHandler = mediaHandler;
 
         this.scan = new Scanner(System.in);
 
+    }
+
+    public void settings(boolean adult, boolean admin) {
+        isAdult = adult;
+        isAdmin = admin;
     }
 
     public String getUserInput(String msg){
@@ -22,8 +36,8 @@ public class TextUI {
         System.out.println(msg);
     }
 
-    public void printMenu(boolean isAdult,boolean isAdmin){
-        if(isAdult == true && isAdmin == false){
+    public void printMenu(){
+        if(isAdult && !isAdmin){
             System.out.println("What do you want to do with your life?");
             System.out.println("--------------------------------------");
             System.out.println("-1.play movie");
@@ -51,7 +65,7 @@ public class TextUI {
 
                     default:
                         System.out.println("not an option try again");
-                        printMenu(Streaming.getCurrentUser().getIsAdult(),userHandler.getCurrentUser().getIsAdmin());
+                        printMenu();
                 }
             }
         }
@@ -60,14 +74,13 @@ public class TextUI {
         System.out.println("What do you want to do with your life?");
         System.out.println("--------------------------------------");
         System.out.println("-1. play movie");
-        System.out.println("-2. rewind moive");
+        System.out.println("-2. rewind movie");
         System.out.println("-3. forward movie");
         System.out.println("-4. return to main menu");
         if (scan.hasNextInt()){
             switch(scan.nextInt()){
-
                 case 1:
-                    getMedia();
+                    mediaHandler.getMedia();
                     break;
                 case 2:
                     System.out.println("now rewinding");
@@ -78,7 +91,7 @@ public class TextUI {
                     watchMovieMenu();
                     break;
                 case 4:
-                    printMenu(userHandler.getCurrentUser.getIsAdult(),userHandler.getCurrentUser.getIsAdmin());
+                    printMenu();
                     break;
                 default:
                     System.out.println("not an option try again");
@@ -148,13 +161,14 @@ public class TextUI {
                         break;
 
                     case 5:
-                        System.out.println(streaming.mediaHandler.searchMedia(name, genre, year, minRating, maxRating));
+                        System.out.println(mediaHandler.searchMedia(name, genre, year, minRating, maxRating));
 
                         break;
 
                     case 0:
                         exit = true;
-                        printMenu(userhandler.getCurrentUser().getIsAdult(), userHandler.getCurrentUser().getIsAdmin());
+                        printMenu();
+                        //printMenu(userHandler.getCurrentUser().isAdult(), userHandler.getCurrentUser().isAdmin());
                         break;
                     case 6:
                         System.out.println("name "+ name+ " genre :"+ genre+ " year "+ year+ " min rating: " +minRating + " max rating: "+maxRating);
@@ -168,12 +182,12 @@ public class TextUI {
     }
     public void seeListOfWatchedMovies(){
         System.out.println("here is your watched media:");
-        System.out.println(userhandler.getCurrentUser().getWatchedMedia());
+        System.out.println(userHandler.getCurrentUser().getWatchedMedia());
         System.out.println("do you want to return to main menu? y/n?");
         if(scan.hasNextLine()){
             switch (scan.nextLine()){
                 case "y":
-                    printMenu(userHandler.getCurrentUser().getIsAdult(),userHandler.getCurrentUser().getIsAdmin());
+                    printMenu();
                     break;
                 case "n":
                     seeListOfWatchedMovies();
@@ -184,8 +198,4 @@ public class TextUI {
             }
         }
     }
-
-
-
-
 }

@@ -5,18 +5,18 @@ import streaming.mediaHandler.*;
 
 public class User {
     private boolean isAdult = false;
-    private boolean isAdming = false;
+    private boolean isAdmin = false;
     private String username;
     private String password;
     private final int id;
     private ArrayList<Media> savedMedia;
     private ArrayList<Media> watchedMedia;
-    User(String username,String password,boolean isAdult,boolean isAdming){
+    User(String username,String password,boolean isAdult,boolean isAdmin){
         int countID = 1;
         this.username = username;
         this.password = password;
         this.isAdult = isAdult;
-        this.isAdming = isAdming;
+        this.isAdmin = isAdmin;
         this.id = countID;
         countID++;
     }
@@ -24,8 +24,8 @@ public class User {
         return isAdult;
     }
 
-    public boolean isAdming() {
-        return isAdming;
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     public String getUsername() {
@@ -56,13 +56,13 @@ public class User {
     protected void setUsername(String name){
             this.username = name;
         }
-    public String saveUserDate(){
+    public String saveUserData(){
         String output = "";
         output += username+";";
         output += password+";";
         output += id+";";
         output += isAdult+";";
-        output += isAdming+";";
+        output += isAdmin+";";
         for(int i = 0; i < savedMedia.size();i++){
             output += savedMedia.get(i).getName();
             if(i < savedMedia.size()-1){
@@ -81,6 +81,11 @@ public class User {
         sb1.append(username+";");*/
 
         return output;
+    }
+
+    @Override
+    public String toString(){
+        return getId() + ";" + getUsername() + ";" + getPassword() + ";" + MediaHandler.InlineListString(getSavedMedia()) + ";" + MediaHandler.InlineListString(getWatchedMedia());
     }
 }
 
