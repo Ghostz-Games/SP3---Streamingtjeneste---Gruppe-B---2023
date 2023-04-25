@@ -29,22 +29,52 @@ public class TextUI {
     }
 
     public String getUserInput(String msg){
-        return msg;
+        return scan.nextLine();
+    }
+
+    public int getUserInputInt(){
+        return scan.nextInt();
     }
 
     public void displayMessage(String msg){
         System.out.println(msg);
     }
 
+
+
+    public void welcomeWindow(){
+        displayMessage("Hello user, please choose to login or register a user");
+        displayMessage("Press '1' to login");
+        displayMessage("Press '2' to register a user");
+        if(scan.hasNextInt()){
+            switch (scan.nextInt()) {
+                case 1 -> loginMenu();
+                case 2 -> registerMenu();
+            }
+        }
+
+    }
+
+    private void registerMenu() {
+        displayMessage("Please insert username and password to register a user");
+
+    }
+
+    private void loginMenu() {
+
+    }
+
+
     public void printMenu(){
         if(isAdult && !isAdmin){
-            System.out.println("What do you want to do with your life?");
-            System.out.println("--------------------------------------");
-            System.out.println("-1.play movie");
-            System.out.println("-2.search for movie");
-            System.out.println("-3.see list of watched movies");
-            System.out.println("-0. exit");
-            System.out.println("--------------------------------------");
+            this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select on of the options below");
+            this.displayMessage("--------------------------------------");
+            this.displayMessage("-1.play movie");
+            this.displayMessage("-2.search for movie");
+            this.displayMessage("-3.see list of watched movies");
+            this.displayMessage("-0. exit");
+            this.displayMessage("--------------------------------------");
+
             if(scan.hasNextInt()){
                 switch (scan.nextInt()){
                     case 1:
