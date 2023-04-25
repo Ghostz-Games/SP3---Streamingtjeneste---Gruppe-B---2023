@@ -44,9 +44,9 @@ public class Streaming {
 
 
         textUI = new TextUI(userHandler, mediaHandler);
-        textUI.welcomeWindow();
-        textUI.settings(getCurrentUser().isAdult(), getCurrentUser().isAdmin());
-        textUI.printMenu();
+        textUI.loginOrRegister();
+        textUI.settings(getCurrentUser());
+        textUI.library();
 
     }
 
