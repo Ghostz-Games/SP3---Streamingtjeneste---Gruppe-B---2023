@@ -2,7 +2,6 @@ package streaming.users;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import streaming.io.FileIO;
 import streaming.io.IO;
 
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class UserHandler {
         return this.currentUser.isAdult();
     }
     public boolean currentUserIsAdmin(){
-        return this.currentUser.isAdming();
+        return this.currentUser.isAdmin();
     }
 
 
