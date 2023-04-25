@@ -1,41 +1,48 @@
 package streaming.mediaHandler;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import streaming.users.User;
+import streaming.io.FileIO;
+import streaming.io.IO;
 public class MediaHandler {
 
 
     private ArrayList<Media> media = new ArrayList<Media>();
 
     private User currentUser;
+    private IO io;
 
-    public MediaHandler(User currentUser){
+    public MediaHandler(FileIO io,User currentUser){
+        this.io = io;
         this.currentUser = currentUser;
     }
 
-    public void loadMovies() throws FileNotFoundException {
-        ArrayList<String> data = IO.readDataMedia();
+    public void loadMovies() throws Exception {
+        ArrayList<String> data = io.readDataMedia();
         for(String s : data){
             String[] line = s.split(";");
             String name = line[0];
             String year = line[1];
             String genre = line[2];
-            String rating = line[3];
+            String rating = line[3].replace(",",".");
+
             media.add(new Movie(name, genre, Float.parseFloat(rating), year, 120));
         }
     }
 
 
-    public void loadSeries() throws FileNotFoundException {
-        ArrayList<String> data = IO.readDataSeries();
+    public void loadSeries() throws Exception {
+        ArrayList<String> data = io.readDataSeries();
         for(String s : data){
             String[] line = s.split(";");
             String name = line[0];
             String year = line[1];
             String genre = line[2];
-            String rating = line[3];
+            String rating = line[3].replace(",",".");;
             String episodes = line[4];
             String[] seasons = episodes.split(",");
             int epsum =0;
@@ -53,7 +60,7 @@ public class MediaHandler {
 
 
     public void playMedia(Media media){
-        UI.playMedia(media);
+        //UI.playMedia(media);
     }
 
 
@@ -62,7 +69,7 @@ public class MediaHandler {
     }
 
 
-    private ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
+    public ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
         ArrayList<Media> output = new ArrayList<>();
 
         if(name != null){
@@ -125,5 +132,15 @@ public class MediaHandler {
         return searchMedia(null, null, null, a, b);
     }
 
+    public static String InlineListString(ArrayList<Media> liste){
+        if(liste == null){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Media m: liste) {
+            sb.append(m.getName());
+        }
+        return sb.toString();
+    }
 
 }

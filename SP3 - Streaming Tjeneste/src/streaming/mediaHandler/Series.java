@@ -14,7 +14,7 @@ public class Series extends Movie{
 
     @Override
     public String toString(){
-        return "Name: "+super.getName()+"\n"+"Genre: "+super.getGenre()+"\n"+"Rating: "+super.getRating()+"\n"+"Amount of episodes: "+episodes.size()+"\n";
+        return "Name: "+super.getName()+"\n"+"Year: "+super.getYear()+"\n"+"Genre: "+super.getGenre()+"\n"+"Rating: "+super.getRating()+"\n"+"Amount of episodes: "+super.getLengthOfMovie()+"\n"+"Amount of seasons: "+episodes.size()+"\n";
     }
 
 }

@@ -5,8 +5,6 @@ import streaming.io.FileIO;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
-
 public class ExceptionHandler {
 
     public ExceptionHandler(){
