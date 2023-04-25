@@ -1,11 +1,11 @@
 package streaming.users;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import streaming.exceptions.InValidUsernameOrPasswordException;
 import streaming.io.IO;
-import streaming.exceptions.InValidPasswordException;
-import streaming.exceptions.InValidUsername;
+import streaming.ui.ExceptionHandler;
 
 import java.util.ArrayList;
 
@@ -15,8 +15,17 @@ public class UserHandler {
 
     private IO io;
 
-    public UserHandler(IO io){
+    public UserHandler(IO io)  {
         this.io = io;
+        try {
+            ArrayList<String> userString = io.readDataUser();
+            for (String s: userString) {
+                String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
+                users.add(new User(splitS[0], splitS[1],splitS[3].equals("true"),splitS[4].equals("true"),splitS[5],splitS[6]));
+            }
+        } catch (IOException e) {
+            //Exception call goes here.
+        }
     }
 
     public ArrayList<User> getUsers(){
@@ -38,38 +47,43 @@ public class UserHandler {
     }
 
         public boolean login (String name, String password)throws Exception{
-		for (int i = 0; 0 < users.size(); i++) {
-			if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
-				if (password.equals(users.get(i).getPassword())) {
-					setCurrentUser(getUser(i));
-					return true;
-				}
-			}
-		}
-		throw new InValidUsernameOrPasswordException("Invalid username or password");
+        /*try {*/
+            for (User u: users) {
+                if (name.equals(u.getUsername())) {
+                    if (password.equals(u.getPassword())) {
+                        setCurrentUser(u);
+                        return true;
+                    }
+                }
+            }
+            return false;
+     /*   }catch (Exception e){
+            throw new IllegalArgumentException();
+        }*/
     }
 
     public void registerUser(String name,String password,boolean isAdult)throws Exception{
         boolean isAdmin = false;
         if(isValidUsername(name)){
-                if (isValidPassword(password)) {
-                    User user = new User(name, password, isAdult, isAdmin);
-                    users.add(user);
-                }
+            if(isValidPassword(password)){
+                User user = new User(name,password,isAdult,isAdmin);
+                users.add(user);
+                io.writeDataUser(user);
+            }
         }
     }
-    protected boolean isValidUsername(String name) throws InValidUsername{
+    protected boolean isValidUsername(String name){
         if(name.length() < 3){
-           throw new InValidUsername("invalid Username; must be longer than 3");
+           return false;
         }
-        for(int i = 0; 0 < users.size();i++){
+        for(int i = 0; i < users.size();i++){
             if(name.equalsIgnoreCase((users.get(i).getUsername()))){
-                throw new InValidUsername("invalid Username; its already in use");
+                return false;
                 }
             }
         return true;
     }
-    protected boolean isValidPassword(String password) throws InValidPasswordException{
+    protected boolean isValidPassword(String password){
         // tjeks if password contrain atleast 1 special char and 1 upper and lower letter
         Pattern rgSpecial = Pattern.compile("[!#¤%&/?+*]+");
         Pattern rgUpper = Pattern.compile("[A-Z]");
@@ -82,15 +96,11 @@ public class UserHandler {
             if(mtSpecial.find() && mtUpper.find() && mtLower.find() && !mtNonValids.find() && password.length() > 8) {
                 return true;
             }
-            throw new InValidPasswordException("Password is not valid, must contain atleast 1 special, 1 upper and lower case letter");
+        return false;
     }
-    public void changeUsername(String name) throws InValidUsername {
-        try {
-            if (isValidUsername(name)) {
-                this.currentUser.setUsername(name);
-            }
-        }catch (InValidUsername e){
-            throw new InValidUsername(e.getMessage());
+    public void changeUsername(String name) {
+        if (isValidUsername(name)) {
+            this.currentUser.setUsername(name);
         }
     }
     public boolean currentUserIsAdult(){
