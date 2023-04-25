@@ -57,6 +57,7 @@ public class TextUI {
 
     private void registerMenu() {
         displayMessage("Please insert username and password to register a user");
+
         String usernameinput = getUserInput("Please write your username:");
         String passwordinput = getUserInput("Please write your password");
         String isAdultInput = getUserInput("Is the created user over the age of 18? Y/N");
@@ -72,6 +73,7 @@ public class TextUI {
             exceptionHandler.catchException(e);
             registerMenu();
         }
+
 
     }
 
