@@ -78,7 +78,17 @@ public class TextUI {
     }
 
     private void loginMenu() {
+        displayMessage("Please insert your login credentials below:");
 
+        String usernameInput = getUserInput("Please type your username:");
+        String passwordInput = getUserInput("Please type your password");
+
+        try{
+            userHandler.login(usernameInput, passwordInput);
+        }catch(Exception e){
+            exceptionHandler.catchException(e);
+            loginMenu();
+        }
     }
 
 
