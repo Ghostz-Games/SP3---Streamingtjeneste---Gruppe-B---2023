@@ -13,7 +13,7 @@ public class TextUI {
     private boolean isAdult = false;
     private boolean isAdmin = false;
 
-    TextUI(UserHandler userHandler, MediaHandler mediaHandler){
+    public TextUI(UserHandler userHandler, MediaHandler mediaHandler){
 
         this.userHandler = userHandler;
 
