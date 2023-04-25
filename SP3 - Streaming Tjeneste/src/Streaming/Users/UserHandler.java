@@ -2,6 +2,7 @@ package streaming.users;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import streaming.exceptions.InValidUsernameOrPasswordException;
 import streaming.io.IO;
 import streaming.exceptions.InValidPasswordException;
 import streaming.exceptions.InValidUsername;
@@ -37,7 +38,6 @@ public class UserHandler {
     }
 
         public boolean login (String name, String password)throws Exception{
-        /*try {*/
             for (int i = 0; 0 < users.size(); i++) {
                 if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
                     if (password.equals(users.get(i).getPassword())) {
@@ -46,10 +46,7 @@ public class UserHandler {
                     }
                 }
             }
-            return false;
-     /*   }catch (Exception e){
-            throw new IllegalArgumentException();
-        }*/
+            throw new InValidUsernameOrPasswordException("Invalid username or password");
     }
 
     public void registerUser(String name,String password,boolean isAdult)throws Exception{
@@ -87,9 +84,13 @@ public class UserHandler {
             }
             throw new InValidPasswordException("Password is not valid, must contain atleast 1 special, 1 upper and lower case letter");
     }
-    public void changeUsername(String name) {
-        if (isValidUsername(name)) {
-            this.currentUser.setUsername(name);
+    public void changeUsername(String name) throws InValidUsername {
+        try {
+            if (isValidUsername(name)) {
+                this.currentUser.setUsername(name);
+            }
+        }catch (InValidUsername e){
+            throw new InValidUsername(e.getMessage());
         }
     }
     public boolean currentUserIsAdult(){

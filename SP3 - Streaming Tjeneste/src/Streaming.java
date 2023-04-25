@@ -1,6 +1,7 @@
 
 import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
+import streaming.ui.ExceptionHandler;
 import streaming.users.UserHandler;
 import streaming.io.FileIO;
 import streaming.users.User;
@@ -13,6 +14,7 @@ public class Streaming {
     public static UserHandler userHandler = new UserHandler(io);
     public static MediaHandler mediaHandler;
     public static TextUI textUI;
+    public static ExceptionHandler exceptionHandler;
 
     public static void main(String[] args) {
 
@@ -31,6 +33,7 @@ public class Streaming {
 
         mediaHandler = new MediaHandler(io, userHandler.getCurrentUser());
         textUI = new TextUI(userHandler, mediaHandler);
+
         try {
 
             mediaHandler.loadMovies();

@@ -9,23 +9,25 @@ import java.io.FileNotFoundException;
 import streaming.exceptions.*;
 public class ExceptionHandler {
     TextUI ui;
-    public ExceptionHandler(TextUI ui){
-        this.ui = ui;
+
+    public ExceptionHandler() {
     }
 
 
-    public String catchException(Exception e){
+    public void catchException(Exception e) {
 
         String errorHandling = null;
-        if(e instanceof FileNotFoundException){
-            System.out.println(e);
-        } else if (e instanceof InValidPasswordException) {
-            errorHandling = " Obi-Wan Kenobi says the passsword or Username is wrong try again";
+        if (e instanceof FileNotFoundException) {
+            System.out.println("File not Found");
+        }/* else if (e instanceof Exception) {
+            System.out.println(e.getMessage());
+        }*/else if (e instanceof InValidPasswordException) {
+            System.out.println(e.getMessage());
         } else if(e instanceof InValidUsername){
-            errorHandli
+            System.out.println(e.getMessage());
         }
-        return errorHandling;
+        //System.out.println(e.getMessage());
     }
 
 
-}
+    }
