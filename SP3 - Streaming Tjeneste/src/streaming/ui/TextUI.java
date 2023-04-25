@@ -29,7 +29,9 @@ public class TextUI {
     }
 
     public String getUserInput(String msg){
-        return scan.nextLine();
+        displayMessage(msg);
+        String output = scan.nextLine();
+        return output;
     }
 
     public int getUserInputInt(){
@@ -48,8 +50,9 @@ public class TextUI {
         displayMessage("Press '2' to register a user");
         if(scan.hasNextInt()){
             switch (scan.nextInt()) {
-                case 1 -> loginMenu();
-                case 2 -> registerMenu();
+                case 1 -> {loginMenu();}
+
+                case 2 -> {registerMenu();}
             }
         }
 
@@ -57,16 +60,25 @@ public class TextUI {
 
     private void registerMenu() {
         displayMessage("Please insert username and password to register a user");
+        scan.nextLine();
+        displayMessage("Please type in your username:");
+        String usernameinput = scan.nextLine();
+        System.out.println(usernameinput);
+        //System.out.println("please write your Password");
+        String passwordinput = getUserInput("Please write your password:").trim();
+        System.out.println(passwordinput);
+        //System.out.println("iss the user an aldult? y/N");
+        //scan.nextLine();
+        String isAdultInput = getUserInput("Is the created user over the age of 18? Y/N").trim();
 
-        String usernameinput = getUserInput("Please write your username:");
-        String passwordinput = getUserInput("Please write your password");
-        String isAdultInput = getUserInput("Is the created user over the age of 18? Y/N");
         boolean isAdult = false;
 
         if(isAdultInput.equalsIgnoreCase("y")){
             isAdult = true;
         }
-        
+
+        System.out.println(usernameinput+" "+passwordinput+" "+isAdultInput);
+
         try {
             userHandler.registerUser(usernameinput, passwordinput, isAdult);
         }catch(Exception e){
@@ -81,6 +93,7 @@ public class TextUI {
         displayMessage("Please insert your login credentials below:");
 
         String usernameInput = getUserInput("Please type your username:");
+        scan.nextLine();
         String passwordInput = getUserInput("Please type your password");
 
         try{
