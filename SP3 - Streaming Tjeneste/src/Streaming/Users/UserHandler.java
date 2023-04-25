@@ -38,15 +38,15 @@ public class UserHandler {
     }
 
         public boolean login (String name, String password)throws Exception{
-            for (int i = 0; 0 < users.size(); i++) {
-                if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
-                    if (password.equals(users.get(i).getPassword())) {
-                        setCurrentUser(getUser(i));
-                        return true;
-                    }
-                }
-            }
-            throw new InValidUsernameOrPasswordException("Invalid username or password");
+		for (int i = 0; 0 < users.size(); i++) {
+			if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
+				if (password.equals(users.get(i).getPassword())) {
+					setCurrentUser(getUser(i));
+					return true;
+				}
+			}
+		}
+		throw new InValidUsernameOrPasswordException("Invalid username or password");
     }
 
     public void registerUser(String name,String password,boolean isAdult)throws Exception{
