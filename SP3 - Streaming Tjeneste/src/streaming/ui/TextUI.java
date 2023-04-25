@@ -110,13 +110,16 @@ public class TextUI {
         while(!exit) {
             System.out.println("What do you want to do with your life?");
             System.out.println("--------------------------------------");
-            System.out.println("-1. search for name");
-            System.out.println("-2. search by genre");
-            System.out.println("-3. year");
-            System.out.println("-4. min,max rating");
-            System.out.println("-0. return to main menu");
+            System.out.println("-1. search for name" + (name==null?"":" - " + name));
+            System.out.println("-2. search by genre" + (genre==null?"":" - " + genre));
+            System.out.println("-3. year" + (year==null?"":" - " + year));
+            System.out.println("-4. min,max rating" +
+                    (minRating != 0 || maxRating != 0?" - ":"") +
+                    (minRating==0?"": "min: " + minRating) +
+                    (minRating != 0 || maxRating != 0?" - ":"") +
+                    (maxRating==0?"": "max: " + maxRating));
             System.out.println("-5. start search");
-            System.out.println("-6. See search criteria");
+            System.out.println("-0. return to main menu");
             if (scan.hasNextInt()) {
                 switch (scan.nextInt()) {
                     case 1:
@@ -151,9 +154,11 @@ public class TextUI {
                         System.out.println("minimum rating:");
                         if (scan.hasNextFloat()) {
                             minRating = scan.nextFloat();
+                            scan.nextLine();
+                            System.out.println("maximum rating:");
                             if (scan.hasNextFloat()) {
-                                System.out.println("maximum rating:");
                                 maxRating = scan.nextFloat();
+                                scan.nextLine();
                                 searchMovieMenu();
                             }
 
