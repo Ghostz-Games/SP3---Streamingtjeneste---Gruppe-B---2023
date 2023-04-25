@@ -1,4 +1,6 @@
 package streaming.users;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +17,17 @@ public class UserHandler {
 
     private IO io;
 
-    public UserHandler(IO io){
+    public UserHandler(IO io)  {
         this.io = io;
+        try {
+            ArrayList<String> userString = io.readDataUser();
+            for (String s: userString) {
+                String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
+                users.add(new User(splitS[0], splitS[1],splitS[3].equals("true"),splitS[4].equals("true"),splitS[5],splitS[6]));
+            }
+        } catch (IOException e) {
+            //Exception call goes here.
+        }
     }
 
     public ArrayList<User> getUsers(){
@@ -29,7 +40,6 @@ public class UserHandler {
         this.currentUser = user;
     }
     public User getCurrentUser(){
-
         return currentUser;
     }
 
@@ -37,11 +47,11 @@ public class UserHandler {
         return currentUser != null;
     }
 
-        public boolean login (String name, String password)throws Exception{
-		for (int i = 0; 0 < users.size(); i++) {
-			if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
-				if (password.equals(users.get(i).getPassword())) {
-					setCurrentUser(getUser(i));
+	public boolean login (String name, String password)throws Exception{
+		for (User u: users) {
+			if (name.equals(u.getUsername())) {
+				if (password.equals(u.getPassword())) {
+					setCurrentUser(u);
 					return true;
 				}
 			}
@@ -52,17 +62,18 @@ public class UserHandler {
     public void registerUser(String name,String password,boolean isAdult)throws Exception{
         boolean isAdmin = false;
         if(isValidUsername(name)){
-                if (isValidPassword(password)) {
-                    User user = new User(name, password, isAdult, isAdmin);
-                    users.add(user);
-                }
+            if(isValidPassword(password)){
+                User user = new User(name,password,isAdult,isAdmin);
+                users.add(user);
+                io.writeDataUser(user);
+            }
         }
     }
     protected boolean isValidUsername(String name) throws InValidUsername{
         if(name.length() < 3){
            throw new InValidUsername("invalid Username; must be longer than 3");
         }
-        for(int i = 0; 0 < users.size();i++){
+        for(int i = 0; i < users.size();i++){
             if(name.equalsIgnoreCase((users.get(i).getUsername()))){
                 throw new InValidUsername("invalid Username; its already in use");
                 }

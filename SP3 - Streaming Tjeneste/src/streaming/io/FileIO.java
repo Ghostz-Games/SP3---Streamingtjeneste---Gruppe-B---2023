@@ -29,7 +29,7 @@ public class FileIO implements IO{
     }
 
     @Override
-    public ArrayList<String> readDataUser(User currentUser) throws FileNotFoundException {
+    public ArrayList<String> readDataUser() throws FileNotFoundException {
         return read("Data/users.csv");
     }
 
@@ -37,11 +37,11 @@ public class FileIO implements IO{
     public void writeDataUser(User currentUser) {
         ArrayList<String> Data;
         try {
-            Data = readDataUser(currentUser);
+            Data = readDataUser();
         } catch (FileNotFoundException e) {
             Data = new ArrayList<String>();
         }
-        Data.add(currentUser.toString());
+        Data.add(currentUser.saveUserData());
         StringBuilder sb = new StringBuilder();
         for(String s: Data){
             sb.append(s + "\n");
