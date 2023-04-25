@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class TextUI {
 
     private Scanner scan;
-    private ExceptionHandler exceptionHandler;
+    private ExceptionHandler exceptionHandler = new ExceptionHandler();
     private UserHandler userHandler;
     private MediaHandler mediaHandler;
     private boolean isAdult = false;
@@ -198,8 +198,4 @@ public class TextUI {
             }
         }
     }
-
-
-
-
 }
