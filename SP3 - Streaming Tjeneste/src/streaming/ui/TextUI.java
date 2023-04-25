@@ -265,7 +265,9 @@ public class TextUI implements UI {
 
     @Override
     public void library(){
-        System.out.println(mediaHandler.getMedia());
+        for(Media m : mediaHandler.getMedia()){
+            System.out.println(m.toString());
+        }
     }
 
     @Override
