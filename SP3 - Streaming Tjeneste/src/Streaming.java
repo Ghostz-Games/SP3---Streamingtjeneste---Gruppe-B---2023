@@ -2,6 +2,7 @@
 import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
 import streaming.ui.ExceptionHandler;
+import streaming.ui.UI;
 import streaming.users.UserHandler;
 import streaming.io.FileIO;
 import streaming.users.User;
@@ -13,7 +14,7 @@ public class Streaming {
     public static FileIO io = new FileIO();
     public static UserHandler userHandler = new UserHandler(io);
     public static MediaHandler mediaHandler;
-    public static TextUI textUI;
+    public static UI textUI;
     public static ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     public static void main(String[] args) {

@@ -1,10 +1,11 @@
 package streaming.ui;
+import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
 import streaming.users.UserHandler;
 
 import java.util.Scanner;
 
-public class TextUI {
+public class TextUI implements UI {
 
     private Scanner scan;
     private ExceptionHandler exceptionHandler = new ExceptionHandler();
@@ -42,8 +43,8 @@ public class TextUI {
     }
 
 
-
-    public void welcomeWindow(){
+    @Override
+    public void loginOrRegister(){
         displayMessage("Hello user, please choose to login or register a user");
         displayMessage("Press '1' to login");
         displayMessage("Press '2' to register a user");
@@ -51,18 +52,19 @@ public class TextUI {
             switch (scan.nextInt()) {
                 case 1 -> {
                     scan.nextLine();
-                    loginMenu();
+                    login();
                 }
                 case 2 -> {
                     scan.nextLine();
-                    registerMenu();
+                    registerUser();
                 }
             }
         }
 
     }
 
-    private void registerMenu() {
+    @Override
+    public void registerUser() {
         //displayMessage("Please insert username and password to register a user");
 
         String usernameInput = getUserInput("Please write your username:");
@@ -78,13 +80,14 @@ public class TextUI {
             userHandler.registerUser(usernameInput, passwordInput, isAdult);
         }catch(Exception e){
             exceptionHandler.catchException(e);
-            registerMenu();
+            registerUser();
         }
 
 
     }
 
-    private void loginMenu() {
+    @Override
+    public void login() {
         displayMessage("Please insert your login credentials below:");
 
         String usernameInput = getUserInput("Please type your username:");
@@ -94,7 +97,7 @@ public class TextUI {
             userHandler.login(usernameInput, passwordInput);
         }catch(Exception e){
             exceptionHandler.catchException(e);
-            loginMenu();
+            login();
         }
     }
 
@@ -251,5 +254,15 @@ public class TextUI {
             scan.nextLine();
             printMenu();
         }
+    }
+
+    @Override
+    public void library(){
+        System.out.println(mediaHandler.getMedia());
+    }
+
+    @Override
+    public void viewMovie(Media media){
+        //// play movie function.
     }
 }
