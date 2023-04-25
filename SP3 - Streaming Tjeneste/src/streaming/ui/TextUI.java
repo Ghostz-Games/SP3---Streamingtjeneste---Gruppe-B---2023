@@ -74,7 +74,7 @@ public class TextUI {
         System.out.println("What do you want to do with your life?");
         System.out.println("--------------------------------------");
         System.out.println("-1. play movie");
-        System.out.println("-2. rewind moive");
+        System.out.println("-2. rewind movie");
         System.out.println("-3. forward movie");
         System.out.println("-4. return to main menu");
         if (scan.hasNextInt()){

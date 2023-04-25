@@ -56,7 +56,7 @@ public class User {
     protected void setUsername(String name){
             this.username = name;
         }
-    public String saveUserDate(){
+    public String saveUserData(){
         String output = "";
         output += username+";";
         output += password+";";
