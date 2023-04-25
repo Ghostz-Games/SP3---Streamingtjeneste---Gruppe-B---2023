@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import streaming.exceptions.InValidUsernameOrPasswordException;
 import streaming.io.IO;
-import streaming.ui.ExceptionHandler;
+import streaming.exceptions.InValidPasswordException;
+import streaming.exceptions.InValidUsername;
 
 import java.util.ArrayList;
 
@@ -38,7 +40,6 @@ public class UserHandler {
         this.currentUser = user;
     }
     public User getCurrentUser(){
-
         return currentUser;
     }
 
@@ -46,20 +47,16 @@ public class UserHandler {
         return currentUser != null;
     }
 
-        public boolean login (String name, String password)throws Exception{
-        /*try {*/
-            for (User u: users) {
-                if (name.equals(u.getUsername())) {
-                    if (password.equals(u.getPassword())) {
-                        setCurrentUser(u);
-                        return true;
-                    }
-                }
-            }
-            return false;
-     /*   }catch (Exception e){
-            throw new IllegalArgumentException();
-        }*/
+	public boolean login (String name, String password)throws Exception{
+		for (User u: users) {
+			if (name.equals(u.getUsername())) {
+				if (password.equals(u.getPassword())) {
+					setCurrentUser(u);
+					return true;
+				}
+			}
+		}
+		throw new InValidUsernameOrPasswordException("Invalid username or password");
     }
 
     public void registerUser(String name,String password,boolean isAdult)throws Exception{
@@ -72,18 +69,18 @@ public class UserHandler {
             }
         }
     }
-    protected boolean isValidUsername(String name){
+    protected boolean isValidUsername(String name) throws InValidUsername{
         if(name.length() < 3){
-           return false;
+           throw new InValidUsername("invalid Username; must be longer than 3");
         }
         for(int i = 0; i < users.size();i++){
             if(name.equalsIgnoreCase((users.get(i).getUsername()))){
-                return false;
+                throw new InValidUsername("invalid Username; its already in use");
                 }
             }
         return true;
     }
-    protected boolean isValidPassword(String password){
+    protected boolean isValidPassword(String password) throws InValidPasswordException{
         // tjeks if password contrain atleast 1 special char and 1 upper and lower letter
         Pattern rgSpecial = Pattern.compile("[!#¤%&/?+*]+");
         Pattern rgUpper = Pattern.compile("[A-Z]");
@@ -96,11 +93,15 @@ public class UserHandler {
             if(mtSpecial.find() && mtUpper.find() && mtLower.find() && !mtNonValids.find() && password.length() > 8) {
                 return true;
             }
-        return false;
+            throw new InValidPasswordException("Password is not valid, must contain atleast 1 special, 1 upper and lower case letter");
     }
-    public void changeUsername(String name) {
-        if (isValidUsername(name)) {
-            this.currentUser.setUsername(name);
+    public void changeUsername(String name) throws InValidUsername {
+        try {
+            if (isValidUsername(name)) {
+                this.currentUser.setUsername(name);
+            }
+        }catch (InValidUsername e){
+            throw new InValidUsername(e.getMessage());
         }
     }
     public boolean currentUserIsAdult(){

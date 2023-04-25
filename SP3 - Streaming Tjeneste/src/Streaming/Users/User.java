@@ -65,8 +65,8 @@ public class User {
         watchedMedia.add(media);
     }
     protected void setUsername(String name){
-            this.username = name;
-        }
+		this.username = name;
+	}
     public String saveUserData(){
         String output = "";
         output += username+";";
