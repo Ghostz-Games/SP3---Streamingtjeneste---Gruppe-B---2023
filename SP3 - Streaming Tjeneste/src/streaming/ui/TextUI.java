@@ -4,6 +4,7 @@ import streaming.mediaHandler.MediaHandler;
 import streaming.users.User;
 import streaming.users.UserHandler;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextUI implements UI {
@@ -254,7 +255,23 @@ public class TextUI implements UI {
                         break;
 
                     case 5:
-                        System.out.println(mediaHandler.searchMedia(name, genre, year, minRating, maxRating));
+                        ArrayList<Media> searched = mediaHandler.searchMedia(name,genre,year,minRating,maxRating);
+                        for (Media m : searched){
+                            System.out.println(m);
+                        }
+
+                        System.out.println("Is this what you wanted to search for or do you want to redo it? y/n");
+                        if(scan.hasNextLine()){
+                            switch (scan.nextLine()){
+                                case "y":
+                                    pageSelectMenu(searched);
+                                    exit = false;
+                                    break;
+                                case "n":
+                                    exit = true;
+                                    break;
+                            }
+                        }
                         exit = true;
                         break;
 
