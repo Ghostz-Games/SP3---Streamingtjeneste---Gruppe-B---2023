@@ -115,13 +115,8 @@ public class TextUI implements UI {
             this.displayMessage("--------------------------------------");
             this.displayMessage("-1.play movie");
             this.displayMessage("-2.search for movie");
-<<<<<<< Updated upstream
-            this.displayMessage("-3.see list of watched movies");
-            this.displayMessage("-4. see the library");
-=======
             this.displayMessage("-3.see library");
             this.displayMessage("-4 see list of watched movies");
->>>>>>> Stashed changes
             this.displayMessage("-0. exit");
             this.displayMessage("--------------------------------------");
 
@@ -141,11 +136,7 @@ public class TextUI implements UI {
                         break;
 
                     case 4:
-<<<<<<< Updated upstream
-                        library();
-=======
                         seeListOfWatchedMovies();
->>>>>>> Stashed changes
                         break;
                     case 0:
                         System.out.println("goodbye obi wan kenobi");
@@ -153,7 +144,7 @@ public class TextUI implements UI {
 
                     default:
                         System.out.println("not an option try again");
-                        mainMenu();
+                        this.mainMenu();
                 }
             }
         }
@@ -188,7 +179,7 @@ public class TextUI implements UI {
                     watchMovieMenu();
                     break;
                 case 4:
-                    mainMenu();
+                    this.mainMenu();
                     break;
                 default:
                     System.out.println("not an option try again");
@@ -267,7 +258,7 @@ public class TextUI implements UI {
 
                     case 0:
                         exit = true;
-                        mainMenu();
+                        this.mainMenu();
                         break;
 
                     default:
@@ -282,7 +273,7 @@ public class TextUI implements UI {
         System.out.println("enter to return to main menu...");
         if(scan.hasNextLine()){
             scan.nextLine();
-            mainMenu();
+            this.mainMenu();
         }
     }
 

@@ -73,11 +73,13 @@ public class UserHandler {
         if(name.length() <= 3){
            throw new InValidUsername("invalid Username; must be longer than 3");
         }
-        for(int i = 0; i < users.size();i++){
-            if(name.equalsIgnoreCase((users.get(i).getUsername()))){
-                throw new InValidUsername("invalid Username; its already in use");
+        if(!users.isEmpty()) {
+            for (int i = 0; i < users.size(); i++) {
+                if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
+                    throw new InValidUsername("invalid Username; its already in use");
                 }
             }
+        }
         return true;
     }
     protected boolean isValidPassword(String password) throws InValidPasswordException{
