@@ -109,13 +109,14 @@ public class TextUI implements UI {
     }
 
 
-    public void MainMenu(){
+    public void mainMenu(){
         if(isAdult && !isAdmin){
             this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select one of the options below");
             this.displayMessage("--------------------------------------");
             this.displayMessage("-1.play movie");
             this.displayMessage("-2.search for movie");
             this.displayMessage("-3.see list of watched movies");
+            this.displayMessage("-4. see the library");
             this.displayMessage("-0. exit");
             this.displayMessage("--------------------------------------");
 
@@ -133,13 +134,16 @@ public class TextUI implements UI {
                         seeListOfWatchedMovies();
                         break;
 
+                    case 4:
+                        library();
+                        break;
                     case 0:
                         System.out.println("goodbye obi wan kenobi");
                         System.exit(0);
 
                     default:
                         System.out.println("not an option try again");
-                        MainMenu();
+                        mainMenu();
                 }
             }
         }
@@ -165,7 +169,7 @@ public class TextUI implements UI {
                     watchMovieMenu();
                     break;
                 case 4:
-                    MainMenu();
+                    mainMenu();
                     break;
                 default:
                     System.out.println("not an option try again");
@@ -244,7 +248,7 @@ public class TextUI implements UI {
 
                     case 0:
                         exit = true;
-                        MainMenu();
+                        mainMenu();
                         break;
 
                     default:
@@ -259,14 +263,30 @@ public class TextUI implements UI {
         System.out.println("enter to return to main menu...");
         if(scan.hasNextLine()){
             scan.nextLine();
-            MainMenu();
+            mainMenu();
         }
     }
 
     @Override
     public void library(){
+        
         for(Media m : mediaHandler.getMedia()){
             System.out.println(m.toString());
+
+        }
+        System.out.println("type return or r to return to main menu");
+        if(scan.hasNextLine()){
+            switch (scan.nextLine()){
+                case "r":
+                    mainMenu();
+                    break;
+                case "return":
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println("not an option try again");
+                    library();
+            }
         }
     }
 
