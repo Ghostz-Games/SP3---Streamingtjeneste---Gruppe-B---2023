@@ -115,13 +115,20 @@ public class TextUI implements UI {
             this.displayMessage("--------------------------------------");
             this.displayMessage("-1.play movie");
             this.displayMessage("-2.search for movie");
+<<<<<<< Updated upstream
             this.displayMessage("-3.see list of watched movies");
+            this.displayMessage("-4. see the library");
+=======
+            this.displayMessage("-3.see library");
+            this.displayMessage("-4 see list of watched movies");
+>>>>>>> Stashed changes
             this.displayMessage("-0. exit");
             this.displayMessage("--------------------------------------");
 
             if(scan.hasNextInt()){
                 switch (scan.nextInt()){
                     case 1:
+
                         watchMovieMenu();
                         break;
 
@@ -130,9 +137,16 @@ public class TextUI implements UI {
                         break;
 
                     case 3:
-                        seeListOfWatchedMovies();
+                        library();
                         break;
 
+                    case 4:
+<<<<<<< Updated upstream
+                        library();
+=======
+                        seeListOfWatchedMovies();
+>>>>>>> Stashed changes
+                        break;
                     case 0:
                         System.out.println("goodbye obi wan kenobi");
                         System.exit(0);
@@ -144,6 +158,14 @@ public class TextUI implements UI {
             }
         }
     }
+
+    public void selectMedia(){
+        String name;
+
+        System.out.println("please type the name of the media you wanna use");
+        
+    }
+
     public void watchMovieMenu(){
         System.out.println("What do you want to do with your life?");
         System.out.println("--------------------------------------");
@@ -154,7 +176,8 @@ public class TextUI implements UI {
         if (scan.hasNextInt()){
             switch(scan.nextInt()){
                 case 1:
-                    mediaHandler.getMedia();
+                    System.out.println("now playing : "+mediaHandler.getCurrentMedia()+ " ...");
+                    watchMovieMenu();
                     break;
                 case 2:
                     System.out.println("now rewinding");
@@ -265,13 +288,33 @@ public class TextUI implements UI {
 
     @Override
     public void library(){
+        
         for(Media m : mediaHandler.getMedia()){
             System.out.println(m.toString());
+
         }
+        System.out.println("type return or r to return to main menu");
+        if(scan.hasNextLine()){
+            switch (scan.nextLine()){
+                case "r":
+                    mainMenu();
+                    break;
+                case "return":
+                    mainMenu();
+                    break;
+                default:
+                    System.out.println("not an option try again");
+                    library();
+            }
+        }
+
+        System.out.println("Please type the name of the movie you want to watch");
+
+
     }
 
     @Override
     public void viewMovie(Media media){
-        //// play movie function.
+
     }
 }
