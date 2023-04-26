@@ -3,6 +3,7 @@ package streaming.users;
 import java.util.ArrayList;
 import streaming.mediaHandler.*;
 
+
 public class User {
     private boolean isAdult = false;
     private boolean isAdmin = false;
@@ -12,7 +13,7 @@ public class User {
     private ArrayList<Media> savedMedia;
     private ArrayList<Media> watchedMedia;
     private static int countID = 1;
-    User(String username,String password,boolean isAdult,boolean isAdmin, ArrayList<Media> saved, ArrayList<Media> watched){
+    User(String username, String password, boolean isAdult, boolean isAdmin, ArrayList<Media> saved, ArrayList<Media> watched){
         this.username = username;
         this.password = password;
         this.isAdult = isAdult;

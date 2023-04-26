@@ -3,7 +3,6 @@ package streaming.mediaHandler;
 
 import java.util.ArrayList;
 
-import streaming.users.User;
 import streaming.io.IO;
 
 import static streaming.util.StringUtil.containsIgnoreCase;

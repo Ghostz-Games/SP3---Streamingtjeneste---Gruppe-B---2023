@@ -20,17 +20,17 @@ public class FileIO implements IO{
     }
     @Override
     public ArrayList<String> readDataMedia() throws FileNotFoundException {
-        return read("Data/Film.csv");
+        return read("SP3 - Streaming Tjeneste/Data/film.csv");
     }
 
     @Override
     public ArrayList<String> readDataSeries() throws FileNotFoundException {
-        return read("Data/serier.csv");
+        return read("SP3 - Streaming Tjeneste/Data/serier.csv");
     }
 
     @Override
     public ArrayList<String> readDataUser() throws FileNotFoundException {
-        return read("Data/users.csv");
+        return read("SP3 - Streaming Tjeneste/Data/users.csv");
     }
 
     @Override
