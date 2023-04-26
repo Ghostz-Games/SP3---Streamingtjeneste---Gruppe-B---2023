@@ -1,6 +1,5 @@
 
 import streaming.io.IO;
-import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
 import streaming.ui.ExceptionHandler;
 import streaming.ui.UI;
@@ -47,7 +46,7 @@ public class Streaming {
         textUI = new TextUI(userHandler, mediaHandler);
         textUI.loginOrRegister();
         textUI.settings(getCurrentUser());
-        textUI.MainMenu();
+        textUI.mainMenu();
     }
 
     public static User getCurrentUser(){

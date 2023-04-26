@@ -12,7 +12,7 @@ public class MediaHandler {
 
 
     private ArrayList<Media> media = new ArrayList<Media>();
-
+    private Media currentMedia;
     private User currentUser;
     private IO io;
 
@@ -132,7 +132,7 @@ public class MediaHandler {
         return searchMedia(null, null, null, a, b);
     }
 
-    public static String InlineListString(ArrayList<Media> liste){
+    public static String inLineListString(ArrayList<Media> liste){
         if(liste == null){
             return "";
         }
@@ -142,5 +142,14 @@ public class MediaHandler {
         }
         return sb.toString();
     }
-
+    public void setCurrentMedia(Media media){
+        this.currentMedia = media;
+    }
+    public void setCurrentMedia(String name){
+        for(int i = 0; i < media.size();i++){
+            if(media.get(i).getName().equalsIgnoreCase(name)){
+                currentMedia = media.get(i);
+            }
+        }
+    }
 }
