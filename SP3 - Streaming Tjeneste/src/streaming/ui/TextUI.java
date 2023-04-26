@@ -172,7 +172,7 @@ public class TextUI implements UI {
         if (scan.hasNextInt()){
             switch(scan.nextInt()){
                 case 1:
-                    System.out.println("now playing : "+ " ...");
+                    System.out.println("now playing : "+ mediaHandler.getCurrentMedia().getName() + "...");
                     watchMovieMenu();
                     break;
                 case 2:
@@ -300,10 +300,10 @@ public class TextUI implements UI {
 
     @Override
     public void library(){
-        
+        this.pageSelectMenu(mediaHandler.getMedia(), 10);
+        /*
         for(Media m : mediaHandler.getMedia()){
             System.out.println(m.toString());
-
         }
         System.out.println("type return or r to return to main menu");
         if(scan.hasNextLine()){
@@ -321,8 +321,49 @@ public class TextUI implements UI {
         }
 
         System.out.println("Please type the name of the movie you want to watch");
+        */
 
+    }
 
+    public void pageSelectMenu(ArrayList<Media> media, int pageLimit){
+        System.out.println("Type \"help\" for help");
+        int page = 0;
+        int maxPages = ((media.size()+1)/pageLimit);
+        if(pageLimit == 0){
+            pageLimit = 10;
+        }
+        while(page >= 0){
+            for(int i = 0; i < 10 && (page != pageLimit || i < (media.size() % pageLimit)); ++i){
+                System.out.println(i + ": " + media.get(i+page*pageLimit));
+            }
+            System.out.println("page: " + page + " out of " + maxPages);
+            if(scan.hasNextLine()){
+                String input = scan.nextLine();
+                String[] splitInput = input.split(" ", 2);
+                switch (splitInput[0]){ //// index 0 is the Action
+                    case "help":
+                        System.out.println("Type \"page \" with a number to go to said page.");
+                        System.out.println("Type \"select \" with a number to go select media.");
+                        break;
+                    case "page":
+                        if(Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) <= maxPages){
+                            page = Integer.parseInt(splitInput[1]);
+                        }
+                        break;
+                    case "select":
+                        if(Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) <= pageLimit){
+                            mediaHandler.selectMedia(media.get(Integer.parseInt(splitInput[1])));
+                        }
+                        break;
+                    case "Search":
+                        this.searchMovieMenu();
+                        break;
+                    case "library":
+                        this.library();
+                        break;
+                }
+            }
+        }
     }
 
     @Override
