@@ -10,7 +10,6 @@ public interface UI {
     void registerUser();
     void library();
     void viewMovie(Media media);
-
     public void settings(User user);
 
 }
