@@ -115,13 +115,9 @@ public class TextUI implements UI {
             this.displayMessage("--------------------------------------");
             this.displayMessage("-1.play movie");
             this.displayMessage("-2.search for movie");
-
             this.displayMessage("-3.see list of watched movies");
             this.displayMessage("-4. see the library");
-
-            this.displayMessage("-3.see library");
             this.displayMessage("-4 see list of watched movies");
-
             this.displayMessage("-0. exit");
             this.displayMessage("--------------------------------------");
 
