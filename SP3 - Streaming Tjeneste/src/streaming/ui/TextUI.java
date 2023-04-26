@@ -115,13 +115,13 @@ public class TextUI implements UI {
             this.displayMessage("--------------------------------------");
             this.displayMessage("-1.play movie");
             this.displayMessage("-2.search for movie");
-<<<<<<< Updated upstream
+
             this.displayMessage("-3.see list of watched movies");
             this.displayMessage("-4. see the library");
-=======
+
             this.displayMessage("-3.see library");
             this.displayMessage("-4 see list of watched movies");
->>>>>>> Stashed changes
+
             this.displayMessage("-0. exit");
             this.displayMessage("--------------------------------------");
 
@@ -141,11 +141,8 @@ public class TextUI implements UI {
                         break;
 
                     case 4:
-<<<<<<< Updated upstream
-                        library();
-=======
                         seeListOfWatchedMovies();
->>>>>>> Stashed changes
+
                         break;
                     case 0:
                         System.out.println("goodbye obi wan kenobi");
@@ -176,7 +173,7 @@ public class TextUI implements UI {
         if (scan.hasNextInt()){
             switch(scan.nextInt()){
                 case 1:
-                    System.out.println("now playing : "+mediaHandler.getCurrentMedia()+ " ...");
+                    System.out.println("now playing : "+ " ...");
                     watchMovieMenu();
                     break;
                 case 2:
