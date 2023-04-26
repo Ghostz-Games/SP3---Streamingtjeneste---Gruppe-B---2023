@@ -142,10 +142,15 @@ public class MediaHandler {
         }
         return sb.toString();
     }
-    public void setCurrentMedia(Media media){
+
+    public Media getCurrentMedia() {
+        return currentMedia;
+    }
+
+    public void selectMedia(Media media){
         this.currentMedia = media;
     }
-    public void setCurrentMedia(String name){
+    public void selectMedia(String name){
         for(int i = 0; i < media.size();i++){
             if(media.get(i).getName().equalsIgnoreCase(name)){
                 currentMedia = media.get(i);
