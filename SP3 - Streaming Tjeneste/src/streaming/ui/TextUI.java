@@ -109,7 +109,7 @@ public class TextUI implements UI {
     }
 
 
-    public void printMenu(){
+    public void MainMenu(){
         if(isAdult && !isAdmin){
             this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select one of the options below");
             this.displayMessage("--------------------------------------");
@@ -139,7 +139,7 @@ public class TextUI implements UI {
 
                     default:
                         System.out.println("not an option try again");
-                        printMenu();
+                        MainMenu();
                 }
             }
         }
@@ -165,7 +165,7 @@ public class TextUI implements UI {
                     watchMovieMenu();
                     break;
                 case 4:
-                    printMenu();
+                    MainMenu();
                     break;
                 default:
                     System.out.println("not an option try again");
@@ -244,7 +244,7 @@ public class TextUI implements UI {
 
                     case 0:
                         exit = true;
-                        printMenu();
+                        MainMenu();
                         break;
 
                     default:
@@ -259,13 +259,15 @@ public class TextUI implements UI {
         System.out.println("enter to return to main menu...");
         if(scan.hasNextLine()){
             scan.nextLine();
-            printMenu();
+            MainMenu();
         }
     }
 
     @Override
     public void library(){
-        System.out.println(mediaHandler.getMedia());
+        for(Media m : mediaHandler.getMedia()){
+            System.out.println(m.toString());
+        }
     }
 
     @Override

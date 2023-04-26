@@ -9,6 +9,7 @@ public interface UI {
     void login();
     void registerUser();
     void library();
+    void MainMenu();
     void viewMovie(Media media);
     public void settings(User user);
 
