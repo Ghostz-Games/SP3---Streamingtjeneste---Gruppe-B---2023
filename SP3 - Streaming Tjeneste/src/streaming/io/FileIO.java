@@ -35,15 +35,25 @@ public class FileIO implements IO{
 
     @Override
     public void writeDataUser(User currentUser) {
-        ArrayList<String> Data;
+        ArrayList<String> data;
         try {
-            Data = readDataUser();
+            data = readDataUser();
         } catch (FileNotFoundException e) {
-            Data = new ArrayList<>();
+            data = new ArrayList<>();
         }
-        Data.add(currentUser.saveUserData());
+        boolean isNew = true;
+        for (int i = data.size()-1; i >= 0; --i){
+            if(data.get(i).split(";")[0].equals(currentUser.getUsername())){
+                data.set(i, currentUser.saveUserData());
+                isNew = false;
+                break;
+            }
+        }
+        if(isNew){
+            data.add(currentUser.saveUserData());
+        }
         StringBuilder sb = new StringBuilder();
-        for(String s: Data){
+        for(String s: data){
             sb.append(s).append("\n");
         }
         try (FileWriter fw = new FileWriter("Data/users.csv")) {
