@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class TextUI implements UI {
 
     private final Scanner scan;
-    private final ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private final ExceptionHandler exceptionHandler = new ExceptionHandler(this);
     private final UserHandler userHandler;
     private final MediaHandler mediaHandler;
     private boolean isAdult = false;

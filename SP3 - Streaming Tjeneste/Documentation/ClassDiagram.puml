@@ -2,17 +2,97 @@
 'https://plantuml.com/class-diagram
 
 class Streaming
-class MediaHandler
-abstract class Media
-class Movie
-class Series
-class UserHandler
+class MediaHandler{
+- Media currentMedia
+- IO io
+- ArrayList<Media> media
++ MediaHandler(IO)
++ Media getCurrentMedia()
++ ArrayList<Media> getListFromInline(String)
++ ArrayList<Media> getMedia()
++ Media getMediaFromName(String)
++ String inlineListString(ArrayList<Media>)
++ void loadMovies()
++ void loadSeries()
++ ArrayList<Media> searchGenre(String)
++ ArrayList<Media> searchMedia(String,String,String,float,float)
++ ArrayList<Media> searchMedia(ArrayList<Media>,String,String,float,float)
++ ArrayList<Media> searchName(String)
++ ArrayList<Media> searchRating(float,float)
++ ArrayList<Media> searchYear(String)
++ void selectMedia(Media)
++ void selectMedia(String)
+}
+abstract class Media{
+- String Genre
+- String name
+- float rating
+- String year
++ Media(String,String,float,String)
++ String getGenre()
++ String getName()
++ float getRating()
++ String getYear()
++ String toString()
+}
+class Movie{
+- double lengthOfMovie
++ Movie(String,String,float,String,double)
++ double getLengthOfMovie()
++ String toString()
+}
+class Series{
+- ArrayList<Interger> episodes
++ Series(String,String,float,double,String,ArrayList<Interger>)
++ String toString()
+}
+class UserHandler{
+# ArrayList<User> users
+# User currentUser
+- IO io
++ UserHandler(IO,MediaHandler)
++ void changeUsername(String) throws InvalidUsername
++ boolean currentUserIsAdmin()
++ boolean currentUserIsAdult()
++ User getCurrentUser()
++ User getUser(int)
++ ArrayList<User> getUsers()
++ boolean hasCurrrentUser()
++ void login(String,String)
++ void registerUser(String,String,boolean)
++ void save()
++ void setCurrentUser(User)
+}
+class User{
+- String username
+- String password
+- FINAL int id
+- int countID
+- boolean isAdmin
+- boolean isAdult
+- ArrayList<Media> savedMedia
+- ArrayList<Media> watchedMedia
++ User(String,String,boolean,boolean)
++ User(String,String,boolean,boolean,ArrayList<Media>)
++ void addSavedMedia(Media)
++ void addWatchedMedia(Media)
++ int getId()
++ String getPassword()
++ ArrayList<Media> getSavedMedia()
++ String getUsername()
++ ArrayList<Media> getWatchedMedia()
++ boolean isAdmin
++ boolean isAdult
++ void removeSavedMedia(Media)
++ String saveUserData()
++ void setUsername(String)
++ String toString()
+}
 class FileIO
 interface IO
 interface UI
 class TextUI
 class ExceptionHandler
-class User
 
 
 
@@ -26,46 +106,14 @@ Media <|--  Series
 IO <|-- "implements" FileIO
 UI <|-- "implements" TextUI
 ExceptionHandler *-- UI
+ExceptionHandler <|-- inValidPasswordException
+ExceptionHandler <|-- inValidUsername
+ExceptionHandler <|-- inValidPasswordOrPasswordException
 Streaming *-- ExceptionHandler
 UserHandler *-- IO
 MediaHandler *-- IO
 '''Streaming *-- IO
 Streaming *-- UI
-
-UserHandler : + ArrayList<User> getUsers()
-UserHandler : - void setCurrentUser(user)
-UserHandler : + User getCurrentUser()
-UserHandler : - ArrayList<User> users
-UserHandler : - User currentUser
-UserHandler : + void login(User user)
-UserHandler : + User registerUser(String name, String password, boolean isAdult)
-UserHandler : - boolean isValidUsername()
-UserHandler : - boolean isValidPassword()
-UserHandler : + boolean currentUserIsAdult()
-UserHandler : + boolean currentUserIsAdmin()
-UserHandler : + IO io
-
-User : - boolean isAdult
-User : - String username
-User : - FINAL int id
-User : - boolean isAdmin
-User : - ArrayList<Media> savedMedia
-User : - ArrayList<Media> watchedMedia
-User : + User(String username, String password, boolean isAdult, boolean isAdmin)
-User : + void setUsername()
-User : + String getUsername()
-User : + int getId()
-User : + ArrayList<Media> getWatchedMedia()
-User : + ArrayList<Media> getSavedMedia()
-User : + boolean getIsAdmin()
-User : + boolean getIsAdult()
-
-MediaHandler : +MediaHandler(currentUser)
-MediaHandler : - List<Media> media
-MediaHandler : + Media currentMedia
-MediaHandler : + playMedia(Media)
-MediaHandler : + IO io
-
 
 Streaming : - UserHandler userHandler
 Streaming : - MediaHandler mediaHandler
@@ -82,8 +130,9 @@ TextUI : + void printMenu(boolean isAdult, boolean isAdmin)
 TextUI : - ExceptionHandler exceptionHandler
 
 
-IO : + List readDataMedia() throws FileNotFoundException
-IO : + List readDataUser(User currentUser) throws FileNotFoundException
+IO : + ArrayList<String> readDataMedia() throws FileNotFoundException
+IO : + ArrayList<String> readDataSeries() throws IOException
+IO : + ArrayList<String> readDataUser(User currentUser) throws IOException
 IO : + void writeDataUser(User currentUser)
 
 UI : + void login()
@@ -92,24 +141,7 @@ UI : + void registerUser()
 UI : + void library()
 UI : + void viewMovie()
 
-FileIO : - Scanner scan
-
-
-MediaHandler : - ArrayList searchGenre(String)
-MediaHandler : - ArrayList searchName(String)
-MediaHandler : - ArrayList searchYear(String)
-MediaHandler : - ArrayList searchRating(float,float)
-MediaHandler : - ArrayList searchMedia(String,String,String,float, float)
-
-Media : - String name
-Media : - String genre
-Media : - int rating
-
-Series : ArrayList<ArrayList<int>> episodes
-
-Movie : - int lengthOfMovie
-
-Series : - int lengthOfEpisode(PLACEHOLDER)
+FileIO : - ArrayList<String> read(String)
 
 
 

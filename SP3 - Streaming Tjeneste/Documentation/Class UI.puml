@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class ExceptionHandler{
+    + ExceptionHandler()
+    + ExceptionHandler(UI ui)
+    + void catchException(Exception)
+    - UI ui
+}
+class TextUI {
+    + TextUI(UserHandler, MediaHandler)
+    + void displayMessage(String)
+    + String getUserInput(String)
+    + int getUserInputInt()
+    + void pageSelectMenu(ArrayList<Media>, int)
+    + void searchMovieMenu()
+    + void seeListOfSavedMovies()
+    + void seeListOfWatchedMovies()
+    + void selectMedia()
+    + void watchMovieMenu()
+    - final ExceptionHandler
+    - boolean isAdmin
+    - boolean isAdult
+    - final MediaHandler
+    - final Scanner
+    - final UserHandler
+}
+class UI {
+    + void library()
+    + void login()
+    + void loginOrRegister()
+    + void mainMenu()
+    + void registerUser()
+    + void settings(User)
+    + void viewMovie(Media)
+}
+@enduml
