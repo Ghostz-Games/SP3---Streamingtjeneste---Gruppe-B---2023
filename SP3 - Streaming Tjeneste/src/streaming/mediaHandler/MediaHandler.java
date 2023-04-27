@@ -3,7 +3,6 @@ package streaming.mediaHandler;
 
 import java.util.ArrayList;
 
-import streaming.users.User;
 import streaming.io.IO;
 
 import static streaming.util.StringUtil.containsIgnoreCase;
@@ -13,12 +12,10 @@ public class MediaHandler {
 
     private ArrayList<Media> media = new ArrayList<Media>();
     private Media currentMedia;
-    private User currentUser;
     private IO io;
 
-    public MediaHandler(IO io,User currentUser){
+    public MediaHandler(IO io){
         this.io = io;
-        this.currentUser = currentUser;
     }
 
     public void loadMovies() throws Exception {
@@ -57,21 +54,13 @@ public class MediaHandler {
         }
     }
 
-
-
-    public void playMedia(Media media){
-        //UI.playMedia(media);
-    }
-
-
     public ArrayList<Media> getMedia(){
         return media;
     }
 
 
-    public ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
-        ArrayList<Media> output = getMedia();
-
+    public ArrayList<Media> searchMedia(ArrayList<Media> media, String name, String genre, String year, float min, float max) {
+        ArrayList<Media> output = new ArrayList<Media>(media);
         if(name != null){
             for(int i = output.size() - 1 ; i >= 0; i--){
                 if(!containsIgnoreCase(output.get(i).getName(),name)){
@@ -115,6 +104,10 @@ public class MediaHandler {
         return output;
     }
 
+    public ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
+        return searchMedia(getMedia(), name, genre, year, min, max);
+    }
+
     private ArrayList<Media> searchGenre(String input){
 
         return searchMedia(null, input, null, 0, 0);
@@ -132,15 +125,41 @@ public class MediaHandler {
         return searchMedia(null, null, null, a, b);
     }
 
-    public static String inLineListString(ArrayList<Media> liste){
+    public static String inlineListString(ArrayList<Media> liste){
         if(liste == null){
             return "";
         }
         StringBuilder sb = new StringBuilder();
         for (Media m: liste) {
-            sb.append(m.getName());
+            sb.append(m.getName()).append(",");
         }
+        sb.delete(sb.length(),1);
         return sb.toString();
+    }
+    public ArrayList<Media> getListFromInline(String inline){
+        ArrayList<Media> output = new ArrayList<Media>();
+        for(String s: inline.split(",")){
+            if(s==""){
+                break;
+            }
+            Media item = getMediaFromName(s);
+            if(item!=null){
+                output.add(item);
+            } else {
+                //// error handler without throwing?
+                System.out.println("Could not find item from catalogue: " + s);
+            }
+        }
+        return output;
+    }
+
+    public Media getMediaFromName(String name){
+        for (Media value : media) {
+            if (value.getName().equalsIgnoreCase(name)) {
+                return value;
+            }
+        }
+        return null;
     }
 
     public Media getCurrentMedia() {
@@ -151,9 +170,9 @@ public class MediaHandler {
         this.currentMedia = media;
     }
     public void selectMedia(String name){
-        for(int i = 0; i < media.size();i++){
-            if(media.get(i).getName().equalsIgnoreCase(name)){
-                currentMedia = media.get(i);
+        for (Media value : media) {
+            if (value.getName().equalsIgnoreCase(name)) {
+                currentMedia = value;
             }
         }
     }

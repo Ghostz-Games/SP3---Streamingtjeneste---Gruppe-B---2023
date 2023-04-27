@@ -1,5 +1,4 @@
 package streaming.users;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,25 +7,30 @@ import streaming.exceptions.InValidUsernameOrPasswordException;
 import streaming.io.IO;
 import streaming.exceptions.InValidPasswordException;
 import streaming.exceptions.InValidUsername;
+import streaming.mediaHandler.Media;
+import streaming.mediaHandler.MediaHandler;
 
 import java.util.ArrayList;
 
 public class UserHandler {
-    protected ArrayList<User> users = new ArrayList();
+    protected ArrayList<User> users = new ArrayList<>();
     protected User currentUser;
-
     private IO io;
 
-    public UserHandler(IO io)  {
+    public UserHandler(IO io, MediaHandler mediaHandler)  {
         this.io = io;
         try {
             ArrayList<String> userString = io.readDataUser();
             for (String s: userString) {
-                String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
-                users.add(new User(splitS[0], splitS[1],splitS[3].equals("true"),splitS[4].equals("true"),splitS[5],splitS[6]));
+                if(!s.equals("")) {
+                    String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
+                    ArrayList<Media> savedMedia = mediaHandler.getListFromInline(splitS[5]);
+                    ArrayList<Media> watchedMedia = mediaHandler.getListFromInline(splitS[6]);
+                    users.add(new User(splitS[0], splitS[1], splitS[3].equals("true"), splitS[4].equals("true"), savedMedia, watchedMedia));
+                }
             }
-        } catch (IOException e) {
-            //Exception call goes here.
+        } catch (Exception e) {
+
         }
     }
 
@@ -47,12 +51,12 @@ public class UserHandler {
         return currentUser != null;
     }
 
-	public boolean login (String name, String password)throws Exception{
+	public void login (String name, String password) throws Exception{
 		for (User u: users) {
 			if (name.equals(u.getUsername())) {
 				if (password.equals(u.getPassword())) {
 					setCurrentUser(u);
-					return true;
+					return;
 				}
 			}
 		}
@@ -65,6 +69,7 @@ public class UserHandler {
             if(isValidPassword(password)){
                 User user = new User(name,password,isAdult,isAdmin);
                 users.add(user);
+                setCurrentUser(user);
                 io.writeDataUser(user);
             }
         }
@@ -95,7 +100,7 @@ public class UserHandler {
             if(mtSpecial.find() && mtUpper.find() && mtLower.find() && !mtNonValids.find() && password.length() > 8) {
                 return true;
             }
-            throw new InValidPasswordException("Password is not valid, must contain atleast 1 special, 1 upper and lower case letter");
+            throw new InValidPasswordException("Password is not valid, must contain atleast 1 special, 1 upper and lower case letter, and be longer than 8 characters");
     }
     public void changeUsername(String name) throws InValidUsername {
         try {
@@ -106,6 +111,10 @@ public class UserHandler {
             throw new InValidUsername(e.getMessage());
         }
     }
+    public void save(){
+        io.writeDataUser(currentUser);
+    }
+
     public boolean currentUserIsAdult(){
         return this.currentUser.isAdult();
     }

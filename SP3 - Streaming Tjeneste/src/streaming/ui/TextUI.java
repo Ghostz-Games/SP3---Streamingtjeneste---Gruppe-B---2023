@@ -1,6 +1,7 @@
 package streaming.ui;
 import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
+import streaming.mediaHandler.Series;
 import streaming.users.User;
 import streaming.users.UserHandler;
 
@@ -9,10 +10,10 @@ import java.util.Scanner;
 
 public class TextUI implements UI {
 
-    private Scanner scan;
-    private ExceptionHandler exceptionHandler = new ExceptionHandler();
-    private UserHandler userHandler;
-    private MediaHandler mediaHandler;
+    private final Scanner scan;
+    private final ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private final UserHandler userHandler;
+    private final MediaHandler mediaHandler;
     private boolean isAdult = false;
     private boolean isAdmin = false;
 
@@ -43,7 +44,7 @@ public class TextUI implements UI {
             scan.nextLine();
             return scanInt;
         }
-        return -1;
+        return Integer.MIN_VALUE;
     }
 
     public void displayMessage(String msg){
@@ -111,49 +112,51 @@ public class TextUI implements UI {
 
 
     public void mainMenu(){
-        if(isAdult && !isAdmin){
-            this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select one of the options below");
-            this.displayMessage("--------------------------------------");
-            this.displayMessage("-1.play movie");
-            this.displayMessage("-2.search for movie");
+        this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select one of the options below");
+        this.displayMessage("--------------------------------------");
+        this.displayMessage("-1. play movie");
+        this.displayMessage("-2. search for movie");
+        this.displayMessage("-3. see the library");
+        this.displayMessage("-4. see list of watched movies");
+        this.displayMessage("-5. see list of Saved movies");
+        this.displayMessage("-0. exit");
+        this.displayMessage("--------------------------------------");
+        if(isAdmin){
+            this.displayMessage("hi admin, Here you can add genre to movies. but its not done yet");
+        }
 
-            this.displayMessage("-3.see list of watched movies");
-            this.displayMessage("-4. see the library");
+        switch (getUserInputInt()){
+            case 1:
 
-            this.displayMessage("-4 see list of watched movies");
-            this.displayMessage("-0. exit");
-            this.displayMessage("--------------------------------------");
+                watchMovieMenu();
+                break;
 
-            if(scan.hasNextInt()){
-                switch (scan.nextInt()){
-                    case 1:
+            case 2:
+                searchMovieMenu();
+                break;
 
-                        watchMovieMenu();
-                        break;
+            case 3:
+                library();
+                break;
 
-                    case 2:
-                        searchMovieMenu();
-                        break;
+            case 4:
+                seeListOfWatchedMovies();
 
-                    case 3:
-                        library();
-                        break;
+                break;
+            case 5:
+                seeListOfSavedMovies();
 
-                    case 4:
-                        seeListOfWatchedMovies();
+                break;
+            case 0:
+                System.out.println("goodbye obi wan kenobi");
+                System.exit(0);
 
-                        break;
-                    case 0:
-                        System.out.println("goodbye obi wan kenobi");
-                        System.exit(0);
-
-                    default:
-                        System.out.println("not an option try again");
-                        this.mainMenu();
-                }
-            }
+            default:
+                System.out.println("not an option try again");
+                this.mainMenu();
         }
     }
+
 
     public void selectMedia(){
         String name;
@@ -163,27 +166,26 @@ public class TextUI implements UI {
     }
 
     public void watchMovieMenu(){
-        System.out.println("What do you want to do with your life?");
         System.out.println("--------------------------------------");
         System.out.println("-1. play movie");
-        System.out.println("-2. rewind movie");
-        System.out.println("-3. forward movie");
-        System.out.println("-4. return to main menu");
+        //System.out.println("-2. rewind movie");
+        //System.out.println("-3. forward movie");
+        System.out.println("-0. return to main menu");
         if (scan.hasNextInt()){
             switch(scan.nextInt()){
                 case 1:
-                    System.out.println("now playing : "+ mediaHandler.getCurrentMedia().getName() + "...");
-                    watchMovieMenu();
+                    viewMovie(mediaHandler.getCurrentMedia());
+                    //watchMovieMenu();
                     break;
                 case 2:
                     System.out.println("now rewinding");
-                    watchMovieMenu();
+                    //watchMovieMenu();
                     break;
                 case 3:
                     System.out.println("now forwarding");
-                    watchMovieMenu();
+                    //watchMovieMenu();
                     break;
-                case 4:
+                case 0:
                     this.mainMenu();
                     break;
                 default:
@@ -201,7 +203,6 @@ public class TextUI implements UI {
         float maxRating = 0;
         boolean exit = false;
         while(!exit) {
-            System.out.println("What do you want to do with your life?");
             System.out.println("--------------------------------------");
             System.out.println("-1. search for name" + (name==null?"":" - " + name));
             System.out.println("-2. search by genre" + (genre==null?"":" - " + genre));
@@ -217,31 +218,25 @@ public class TextUI implements UI {
                 int lineInt = scan.nextInt();
                 scan.nextLine();
                 switch (lineInt) {
-                    case 1:
+                    case 1 -> {
                         System.out.println("please type the name you want to search for:");
                         if (scan.hasNextLine()) {
                             name = scan.nextLine();
                         }
-                        break;
-
-                    case 2:
-
+                    }
+                    case 2 -> {
                         System.out.println("please type the genre you want to search for:");
                         if (scan.hasNextLine()) {
                             genre = scan.nextLine();
                         }
-                        break;
-
-                    case 3:
-
+                    }
+                    case 3 -> {
                         System.out.println("please type the year you want to search by");
                         if (scan.hasNextLine()) {
                             year = scan.nextLine();
                         }
-                        break;
-
-                    case 4:
-
+                    }
+                    case 4 -> {
                         System.out.println("please type the minimum rating and maximum rating");
                         System.out.println("minimum rating:");
                         if (scan.hasNextFloat()) {
@@ -254,113 +249,124 @@ public class TextUI implements UI {
                             }
 
                         }
-                        break;
-
-                    case 5:
-                        ArrayList<Media> searched = mediaHandler.searchMedia(name,genre,year,minRating,maxRating);
-                        for (Media m : searched){
+                    }
+                    case 5 -> {
+                        ArrayList<Media> searched = mediaHandler.searchMedia(name, genre, year, minRating, maxRating);
+                        for (Media m : searched) {
                             System.out.println(m);
                         }
-
-                        System.out.println("Is this what you wanted to search for or do you want to redo it? y/n");
-                        if(scan.hasNextLine()){
-                            switch (scan.nextLine()){
-                                case "y":
-                                    pageSelectMenu(searched);
-                                    exit = false;
-                                    break;
-                                case "n":
-                                    exit = true;
-                                    break;
+                        boolean exitRedo = false;
+                        while(!exitRedo){
+                            System.out.println("Are one of these the movie you searched for? y/n");
+                            if (scan.hasNextLine()) {
+                                switch (scan.nextLine().toLowerCase()) {
+                                    case "y" -> {
+                                        pageSelectMenu(searched, 10);
+                                        exit = true;
+                                        exitRedo = true;
+                                    }
+                                    case "n" -> exitRedo = true;
+                                    default -> this.displayMessage("Sorry I don't understand.");
+                                }
                             }
                         }
-                        exit = true;
-                        break;
-
-                    case 0:
+                    }
+                    case 0 -> {
                         exit = true;
                         this.mainMenu();
-                        break;
-
-                    default:
-                        System.out.println("not an option try again");
+                    }
+                    default -> System.out.println("not an option try again");
                 }
+            } else {
+                scan.nextLine();
+                System.out.println("not an option please use a number");
             }
         }
     }
     public void seeListOfWatchedMovies(){
         System.out.println("here is your watched media:");
-        System.out.println(userHandler.getCurrentUser().getWatchedMedia());
-        System.out.println("enter to return to main menu...");
-        if(scan.hasNextLine()){
-            scan.nextLine();
-            this.mainMenu();
-        }
+        this.pageSelectMenu(userHandler.getCurrentUser().getWatchedMedia(), 10);
+    }
+    public void seeListOfSavedMovies(){
+        System.out.println("here is your saved media:");
+        this.pageSelectMenu(userHandler.getCurrentUser().getSavedMedia(), 10);
     }
 
     @Override
     public void library(){
         this.pageSelectMenu(mediaHandler.getMedia(), 10);
-        /*
-        for(Media m : mediaHandler.getMedia()){
-            System.out.println(m.toString());
-        }
-        System.out.println("type return or r to return to main menu");
-        if(scan.hasNextLine()){
-            switch (scan.nextLine()){
-                case "r":
-                    mainMenu();
-                    break;
-                case "return":
-                    mainMenu();
-                    break;
-                default:
-                    System.out.println("not an option try again");
-                    library();
-            }
-        }
-
-        System.out.println("Please type the name of the movie you want to watch");
-        */
-
     }
 
     public void pageSelectMenu(ArrayList<Media> media, int pageLimit){
+        if(!isAdult){
+            media = mediaHandler.searchMedia(media,null,"family", null, 0, 0);
+        }
         System.out.println("Type \"help\" for help");
         int page = 0;
-        int maxPages = ((media.size()+1)/pageLimit);
-        if(pageLimit == 0){
-            pageLimit = 10;
-        }
-        while(page >= 0){
-            for(int i = 0; i < 10 && (page != pageLimit || i < (media.size() % pageLimit)); ++i){
-                System.out.println(i + ": " + media.get(i+page*pageLimit));
+        int maxPages = ((media.size()-1)/pageLimit);
+        System.out.println(media.size());
+        boolean exit = false;
+        while(!exit){
+            for(int i = page*pageLimit; i < media.size() && i < (page+1)*pageLimit; ++i){
+                System.out.println(i + ": " + media.get(i));
             }
             System.out.println("page: " + page + " out of " + maxPages);
             if(scan.hasNextLine()){
                 String input = scan.nextLine();
                 String[] splitInput = input.split(" ", 2);
-                switch (splitInput[0]){ //// index 0 is the Action
-                    case "help":
-                        System.out.println("Type \"page \" with a number to go to said page.");
-                        System.out.println("Type \"select \" with a number to go select media.");
-                        break;
-                    case "page":
-                        if(Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) <= maxPages){
+                switch (splitInput[0].toLowerCase()) { //// index 0 is the Action
+                    case "help", "h", "?" -> {
+                        System.out.println("page 0, p 0 - go to given page.");
+                        System.out.println("watch 0, w 0 - watch media.");
+                        System.out.println("save 0, s 0 - save media.");
+                        System.out.println("search, sea - go to the search menu.");
+                        System.out.println("library, lib - see the entire list of movies.");
+                        System.out.println("back, b - return to main menu.");
+                    }
+                    case "page", "p" -> {
+                        if(splitInput.length == 3){
+                            System.out.println("number parameter required example: p 0");
+                            break;
+                        }
+                        if (Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) <= maxPages) {
                             page = Integer.parseInt(splitInput[1]);
                         }
-                        break;
-                    case "select":
-                        if(Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) <= pageLimit){
+                    }
+                    case "watch", "w" -> {
+                        if(splitInput.length == 3){
+                            System.out.println("number parameter required example: watch 0");
+                            break;
+                        }
+                        if (Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) < media.size()) {
                             mediaHandler.selectMedia(media.get(Integer.parseInt(splitInput[1])));
                         }
-                        break;
-                    case "Search":
+                        this.viewMovie(mediaHandler.getCurrentMedia());
+                        exit = true;
+                    }
+                    case "save", "s" -> {
+                        if(splitInput.length == 3){
+                            System.out.println("number parameter required example: save 0");
+                            break;
+                        }
+                        if (Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) <= media.size()) {
+                            mediaHandler.selectMedia(media.get(Integer.parseInt(splitInput[1])));
+                        }
+                        userHandler.getCurrentUser().addSavedMedia(mediaHandler.getCurrentMedia());
+                        userHandler.save();
+                        System.out.println(mediaHandler.getCurrentMedia().getName() + " has been saved.");
+                    }
+                    case "search", "sea" -> {
                         this.searchMovieMenu();
-                        break;
-                    case "library":
+                        exit = true;
+                    }
+                    case "library", "lib" -> {
                         this.library();
-                        break;
+                        exit = true;
+                    }
+                    case "back", "b" -> {
+                        this.mainMenu();
+                        exit = true;
+                    }
                 }
             }
         }
@@ -368,6 +374,31 @@ public class TextUI implements UI {
 
     @Override
     public void viewMovie(Media media){
-
+        System.out.println("Now playing : "+ mediaHandler.getCurrentMedia().getName() + "...");
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            exceptionHandler.catchException(e);
+        }
+        System.out.println("Thank you for watching!");
+        userHandler.getCurrentUser().addWatchedMedia(media);
+        userHandler.getCurrentUser().removeSavedMedia(media);
+        userHandler.save();
+        if(mediaHandler.getCurrentMedia() instanceof Series){
+            System.out.println("watch next episode? Y/N");
+            if(scan.hasNextLine()){
+                switch (scan.nextLine().toLowerCase()) {
+                    case "y" -> {
+                        System.out.println("Sorry not implimented yet!");
+                        mainMenu(); //// for now!
+                    }
+                    case "n" -> {
+                        mainMenu();
+                    }
+                }
+            }
+        } else {
+            mainMenu();
+        }
     }
 }

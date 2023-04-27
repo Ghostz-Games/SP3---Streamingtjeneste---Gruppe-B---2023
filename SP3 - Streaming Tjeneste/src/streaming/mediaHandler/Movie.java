@@ -1,6 +1,6 @@
 package streaming.mediaHandler;
 
-public class Movie extends Media{
+public class Movie extends Media {
 
     private double lengthOfMovie;
 

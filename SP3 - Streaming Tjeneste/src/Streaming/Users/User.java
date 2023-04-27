@@ -3,33 +3,37 @@ package streaming.users;
 import java.util.ArrayList;
 import streaming.mediaHandler.*;
 
+
 public class User {
     private boolean isAdult = false;
     private boolean isAdmin = false;
     private String username;
     private String password;
     private final int id;
-    private ArrayList<String> savedMedia = new ArrayList<>();
-    private ArrayList<String> watchedMedia = new ArrayList<>();
+    private ArrayList<Media> savedMedia;
+    private ArrayList<Media> watchedMedia;
     private static int countID = 1;
-    User(String username,String password,boolean isAdult,boolean isAdmin, String saved, String watched){
+    User(String username, String password, boolean isAdult, boolean isAdmin, ArrayList<Media> saved, ArrayList<Media> watched){
         this.username = username;
         this.password = password;
         this.isAdult = isAdult;
         this.isAdmin = isAdmin;
         this.id = countID;
         ++countID;
-        String[] splitSaved = saved.split(",");
-        for(String s: splitSaved){
-            addSavedMedia(s);
-        }
-        String[] splitWatched = saved.split(",");
-        for(String s: splitWatched){
-            addWatchedMedia(s);
-        }
+        this.savedMedia = saved;
+        this.watchedMedia = watched;
+//        String[] splitSaved = saved.split(",");
+//        for(String s: splitSaved){
+//            addSavedMedia(s);
+//        }
+//
+//        String[] splitWatched = saved.split(",");
+//        for(String s: splitWatched){
+//            addWatchedMedia(s);
+//        }
     }
     User(String username,String password,boolean isAdult,boolean isAdmin){
-        this(username, password, isAdult,isAdmin,"","");
+        this(username, password, isAdult,isAdmin,new ArrayList<>(),new ArrayList<>());
     }
     public boolean isAdult() {
         return isAdult;
@@ -50,48 +54,54 @@ public class User {
         return id;
     }
 
-    public ArrayList<String> getSavedMedia() {
+    public ArrayList<Media> getSavedMedia() {
         return savedMedia;
     }
 
-    public ArrayList<String> getWatchedMedia() {
+    public ArrayList<Media> getWatchedMedia() {
         return watchedMedia;
     }
 
-    public void addSavedMedia(String media){
-        savedMedia.add(media);
+    public void addSavedMedia(Media media){
+        if(!savedMedia.contains(media)) {
+            savedMedia.add(media);
+        }
     }
-    public void addWatchedMedia(String media){
-        watchedMedia.add(media);
+    public void removeSavedMedia(Media media){
+        if(savedMedia.contains(media)){
+            savedMedia.remove(media);
+        }
+    }
+    public void addWatchedMedia(Media media) {
+        if (!watchedMedia.contains(media)){
+            watchedMedia.add(media);
+        }
     }
     protected void setUsername(String name){
 		this.username = name;
 	}
     public String saveUserData(){
-        String output = "";
-        output += username+";";
-        output += password+";";
-        output += id+";";
-        output += isAdult+";";
-        output += isAdmin+";";
+        StringBuilder output = new StringBuilder();
+        output.append(username).append(";");
+        output.append(password).append(";");
+        output.append(id).append(";");
+        output.append(isAdult).append(";");
+        output.append(isAdmin).append(";");
         for(int i = 0; i < savedMedia.size();i++){
-            output += savedMedia.get(i);
+            output.append(savedMedia.get(i).getName());
             if(i < savedMedia.size()-1){
-                output += ",";
+                output.append(",");
             }
         }
-        output += ";";
+        output.append(";");
         for(int i = 0; i < watchedMedia.size();i++){
-            output += watchedMedia.get(i);
-            if(i < savedMedia.size()-1){
-                output += ",";
+            output.append(watchedMedia.get(i).getName());
+            if(i < watchedMedia.size()-1){
+                output.append(",");
             }
         }
-        output += ";";
-        /*StringBuilder sb1 = new StringBuilder();
-        sb1.append(username+";");*/
-
-        return output;
+        output.append(";");
+        return output.toString();
     }
     @Override
     public String toString(){
