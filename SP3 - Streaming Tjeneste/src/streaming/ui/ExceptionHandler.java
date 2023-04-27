@@ -8,9 +8,12 @@ import java.io.FileNotFoundException;
 
 import streaming.exceptions.*;
 public class ExceptionHandler {
-    TextUI ui;
+    public UI ui;
 
     public ExceptionHandler() {
+    }
+    public ExceptionHandler(UI ui) {
+        this.ui = ui;
     }
 
 
