@@ -298,6 +298,9 @@ public class TextUI implements UI {
     }
 
     public void pageSelectMenu(ArrayList<Media> media, int pageLimit){
+        if(!isAdult){
+            media = mediaHandler.searchMedia(media,null,"family", null, 0, 0);
+        }
         System.out.println("Type \"help\" for help");
         int page = 0;
         int maxPages = ((media.size()-1)/pageLimit);
