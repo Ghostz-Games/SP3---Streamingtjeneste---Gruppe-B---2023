@@ -153,11 +153,11 @@ package streaming.exceptions{
 class InValidPasswordException{
 + InValidPasswordException(String)
 }
-class InValidUsername{
-+ InValidUsername(String)
+class InValidUsernameException{
++ InValidUsernameException(String)
 }
-class InValidPasswordOrPasswordException{
-+ InValidPasswordOrPasswordException(String)
+class InValidUsernameOrPasswordException{
++ InValidUsernameOrPasswordException(String)
 }
 }
 
@@ -189,16 +189,16 @@ IO <|-- "implements" FileIO
 UI <|-- "implements" TextUI
 ExceptionHandler *-- UI
 ExceptionHandler o-- InValidPasswordException
-ExceptionHandler o-- InValidUsername
-ExceptionHandler o-- InValidPasswordOrPasswordException
+ExceptionHandler o-- InValidUsernameException
+ExceptionHandler o-- InValidUsernameOrPasswordException
 Streaming *-- ExceptionHandler
 UserHandler *-- IO
 MediaHandler *-- IO
 Streaming *-- UI
 
 Exception <|-- InValidPasswordException
-Exception <|-- InValidUsername
-Exception <|-- InValidPasswordOrPasswordException
+Exception <|-- InValidUsernameException
+Exception <|-- InValidUsernameOrPasswordException
 
 MediaHandler o-- StringUtil
 
