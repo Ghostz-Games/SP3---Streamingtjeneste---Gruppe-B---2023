@@ -22,13 +22,12 @@ public class Streaming {
 
         //debug();
 
-        //textUI.loginOrRegister();
-        try{
+        textUI.loginOrRegister();
+        /*try{
             userHandler.login("admin", "Root!1000");
         } catch(Exception ignored){
             textUI.loginOrRegister();
-        }
-
+        }*/
         textUI.settings(getCurrentUser());
         textUI.mainMenu();
     }
@@ -44,7 +43,7 @@ public class Streaming {
         textUI = new TextUI(userHandler, mediaHandler);
     }
 
-    private static void debug(){
+    /*private static void debug(){
         try {
             userHandler.registerUser("Lars2", "Coolseeeeeeeeej!", true);
         }catch (Exception e){
@@ -59,7 +58,7 @@ public class Streaming {
         ////Debugging
         System.out.println(userHandler.getUsers());
         System.out.println(userHandler.getCurrentUser());
-    }
+    }*/
 
     public static User getCurrentUser(){
         return userHandler.getCurrentUser();
