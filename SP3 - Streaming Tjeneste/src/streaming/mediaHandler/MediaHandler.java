@@ -59,9 +59,8 @@ public class MediaHandler {
     }
 
 
-    public ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
-        ArrayList<Media> output = new ArrayList<Media>(getMedia());
-
+    public ArrayList<Media> searchMedia(ArrayList<Media> media, String name, String genre, String year, float min, float max) {
+        ArrayList<Media> output = new ArrayList<Media>(media);
         if(name != null){
             for(int i = output.size() - 1 ; i >= 0; i--){
                 if(!containsIgnoreCase(output.get(i).getName(),name)){
@@ -103,6 +102,10 @@ public class MediaHandler {
         }
 
         return output;
+    }
+
+    public ArrayList<Media> searchMedia(String name, String genre, String year, float min, float max){
+        return searchMedia(getMedia(), name, genre, year, min, max);
     }
 
     private ArrayList<Media> searchGenre(String input){
