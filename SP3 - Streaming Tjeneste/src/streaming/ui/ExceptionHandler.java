@@ -13,7 +13,6 @@ public class ExceptionHandler {
     public ExceptionHandler() {
     }
 
-
     public void catchException(Exception e) {
 
         String errorHandling = null;
