@@ -16,7 +16,6 @@ public class ExceptionHandler {
         this.ui = ui;
     }
 
-
     public void catchException(Exception e) {
 
         String errorHandling = null;
