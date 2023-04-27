@@ -1,7 +1,16 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class Streaming
+class Streaming{
++ {static}UserHandler userHandler
++ {static} TextUI UI
++ {static} MediaHandler mediaHandler
++ {static} IO io
++ {static} ExceptionHandler exceptionHandler
++ {static} void main (String)
+- {static} void setup()
++ {static} User getCurrentUser()
+}
 class MediaHandler{
 - Media currentMedia
 - IO io
@@ -88,11 +97,58 @@ class User{
 + void setUsername(String)
 + String toString()
 }
-class FileIO
-interface IO
-interface UI
-class TextUI
-class ExceptionHandler
+class FileIO{
+- ArrayList<String> read(String)
+}
+interface IO{
++ ArrayList<String> readDataMedia()
++ ArrayList<String> readDataSeries()
++ ArrayList<String> readDataUser()
++ void writeDataUser(User)
+}
+class ExceptionHandler{
+    + ExceptionHandler()
+    + ExceptionHandler(UI ui)
+    + void catchException(Exception)
+    - UI ui
+}
+class TextUI {
+    + TextUI(UserHandler, MediaHandler)
+    + void displayMessage(String)
+    + String getUserInput(String)
+    + int getUserInputInt()
+    + void pageSelectMenu(ArrayList<Media>, int)
+    + void searchMovieMenu()
+    + void seeListOfSavedMovies()
+    + void seeListOfWatchedMovies()
+    + void selectMedia()
+    + void watchMovieMenu()
+    - final ExceptionHandler
+    - boolean isAdmin
+    - boolean isAdult
+    - final MediaHandler
+    - final Scanner
+    - final UserHandler
+}
+Interface UI {
+    + void library()
+    + void login()
+    + void loginOrRegister()
+    + void mainMenu()
+    + void registerUser()
+    + void settings(User)
+    + void viewMovie(Media)
+}
+Class Exception
+Class InValidPasswordException{
++ InValidPasswordException(String)
+}
+Class InValidUsername{
++ InValidUsername(String)
+}
+Class InValidPasswordOrPasswordException{
++ InValidPasswordOrPasswordException(String)
+}
 
 
 
@@ -106,42 +162,19 @@ Media <|--  Series
 IO <|-- "implements" FileIO
 UI <|-- "implements" TextUI
 ExceptionHandler *-- UI
-ExceptionHandler <|-- inValidPasswordException
-ExceptionHandler <|-- inValidUsername
-ExceptionHandler <|-- inValidPasswordOrPasswordException
+ExceptionHandler o-- InValidPasswordException
+ExceptionHandler o-- InValidUsername
+ExceptionHandler o-- InValidPasswordOrPasswordException
 Streaming *-- ExceptionHandler
 UserHandler *-- IO
 MediaHandler *-- IO
-'''Streaming *-- IO
 Streaming *-- UI
 
-Streaming : - UserHandler userHandler
-Streaming : - MediaHandler mediaHandler
-Streaming : - UI ui
-'''Streaming : - IO io
-Streaming : + void dataSetup()
-Streaming : + void mainMenu()
-Streaming : + void exit()
-
-TextUI : - Scanner scan
-TextUI : + String getUserInput(String msg)
-TextUI : + String displayMsg(String msg)
-TextUI : + void printMenu(boolean isAdult, boolean isAdmin)
-TextUI : - ExceptionHandler exceptionHandler
+Exception <|-- InValidPasswordException
+Exception <|-- InValidUsername
+Exception <|-- InValidPasswordOrPasswordException
 
 
-IO : + ArrayList<String> readDataMedia() throws FileNotFoundException
-IO : + ArrayList<String> readDataSeries() throws IOException
-IO : + ArrayList<String> readDataUser(User currentUser) throws IOException
-IO : + void writeDataUser(User currentUser)
-
-UI : + void login()
-UI : + void loginOrRegister()
-UI : + void registerUser()
-UI : + void library()
-UI : + void viewMovie()
-
-FileIO : - ArrayList<String> read(String)
 
 
 
