@@ -63,11 +63,19 @@ public class User {
     }
 
     public void addSavedMedia(Media media){
-        savedMedia.add(media);
+        if(!savedMedia.contains(media)) {
+            savedMedia.add(media);
+        }
     }
-
-    public void addWatchedMedia(Media media){
-        watchedMedia.add(media);
+    public void removeSavedMedia(Media media){
+        if(savedMedia.contains(media)){
+            savedMedia.remove(media);
+        }
+    }
+    public void addWatchedMedia(Media media) {
+        if (!watchedMedia.contains(media)){
+            watchedMedia.add(media);
+        }
     }
     protected void setUsername(String name){
 		this.username = name;
@@ -88,7 +96,7 @@ public class User {
         output.append(";");
         for(int i = 0; i < watchedMedia.size();i++){
             output.append(watchedMedia.get(i).getName());
-            if(i < savedMedia.size()-1){
+            if(i < watchedMedia.size()-1){
                 output.append(",");
             }
         }

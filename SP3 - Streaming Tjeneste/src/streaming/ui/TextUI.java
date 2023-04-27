@@ -112,50 +112,51 @@ public class TextUI implements UI {
 
 
     public void mainMenu(){
-        if(isAdult && !isAdmin){
-            this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select one of the options below");
-            this.displayMessage("--------------------------------------");
-            this.displayMessage("-1. play movie");
-            this.displayMessage("-2. search for movie");
-            this.displayMessage("-3. see the library");
-            this.displayMessage("-4. see list of watched movies");
-            this.displayMessage("-5. see list of Saved movies");
-            this.displayMessage("-0. exit");
-            this.displayMessage("--------------------------------------");
+        this.displayMessage("Welcome to the streaming service (TITLE WORK IN PROGRESS). Please select one of the options below");
+        this.displayMessage("--------------------------------------");
+        this.displayMessage("-1. play movie");
+        this.displayMessage("-2. search for movie");
+        this.displayMessage("-3. see the library");
+        this.displayMessage("-4. see list of watched movies");
+        this.displayMessage("-5. see list of Saved movies");
+        this.displayMessage("-0. exit");
+        this.displayMessage("--------------------------------------");
+        if(isAdmin){
+            this.displayMessage("hi admin, Here you can add genre to movies. but its not done yet");
+        }
 
+        switch (getUserInputInt()){
+            case 1:
 
-            switch (getUserInputInt()){
-                case 1:
+                watchMovieMenu();
+                break;
 
-                    watchMovieMenu();
-                    break;
+            case 2:
+                searchMovieMenu();
+                break;
 
-                case 2:
-                    searchMovieMenu();
-                    break;
+            case 3:
+                library();
+                break;
 
-                case 3:
-                    library();
-                    break;
+            case 4:
+                seeListOfWatchedMovies();
 
-                case 4:
-                    seeListOfWatchedMovies();
+                break;
+            case 5:
+                seeListOfSavedMovies();
 
-                    break;
-                case 5:
-                    seeListOfSavedMovies();
+                break;
+            case 0:
+                System.out.println("goodbye obi wan kenobi");
+                System.exit(0);
 
-                    break;
-                case 0:
-                    System.out.println("goodbye obi wan kenobi");
-                    System.exit(0);
-
-                default:
-                    System.out.println("not an option try again");
-                    this.mainMenu();
-            }
+            default:
+                System.out.println("not an option try again");
+                this.mainMenu();
         }
     }
+
 
     public void selectMedia(){
         String name;
@@ -378,6 +379,7 @@ public class TextUI implements UI {
         }
         System.out.println("Thank you for watching!");
         userHandler.getCurrentUser().addWatchedMedia(media);
+        userHandler.getCurrentUser().removeSavedMedia(media);
         userHandler.save();
         if(mediaHandler.getCurrentMedia() instanceof Series){
             System.out.println("watch next episode? Y/N");

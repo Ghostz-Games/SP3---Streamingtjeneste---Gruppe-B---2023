@@ -22,13 +22,15 @@ public class UserHandler {
         try {
             ArrayList<String> userString = io.readDataUser();
             for (String s: userString) {
-                String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
-                ArrayList<Media> savedMedia = mediaHandler.getListFromInline(splitS[5]);
-                ArrayList<Media> watchedMedia = mediaHandler.getListFromInline(splitS[6]);
-                users.add(new User(splitS[0], splitS[1],splitS[3].equals("true"),splitS[4].equals("true"),savedMedia,watchedMedia));
+                if(!s.equals("")) {
+                    String[] splitS = s.split(";", -1); //// limit = -1 means that it doesn't ignore empty lines
+                    ArrayList<Media> savedMedia = mediaHandler.getListFromInline(splitS[5]);
+                    ArrayList<Media> watchedMedia = mediaHandler.getListFromInline(splitS[6]);
+                    users.add(new User(splitS[0], splitS[1], splitS[3].equals("true"), splitS[4].equals("true"), savedMedia, watchedMedia));
+                }
             }
-        } catch (IOException e) {
-            //Exception call goes here.
+        } catch (Exception e) {
+
         }
     }
 
@@ -67,6 +69,7 @@ public class UserHandler {
             if(isValidPassword(password)){
                 User user = new User(name,password,isAdult,isAdmin);
                 users.add(user);
+                setCurrentUser(user);
                 io.writeDataUser(user);
             }
         }
