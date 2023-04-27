@@ -1,16 +1,9 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class Streaming{
-+ {static}UserHandler userHandler
-+ {static} TextUI UI
-+ {static} MediaHandler mediaHandler
-+ {static} IO io
-+ {static} ExceptionHandler exceptionHandler
-+ {static} void main (String)
-- {static} void setup()
-+ {static} User getCurrentUser()
-}
+package streaming{
+
+package streaming.mediaHandler{
 class MediaHandler{
 - Media currentMedia
 - IO io
@@ -55,6 +48,10 @@ class Series{
 + Series(String,String,float,double,String,ArrayList<Interger>)
 + String toString()
 }
+}
+
+
+package streaming.users{
 class UserHandler{
 # ArrayList<User> users
 # User currentUser
@@ -97,6 +94,10 @@ class User{
 + void setUsername(String)
 + String toString()
 }
+}
+
+package streaming.io{
+
 class FileIO{
 - ArrayList<String> read(String)
 }
@@ -106,6 +107,10 @@ interface IO{
 + ArrayList<String> readDataUser()
 + void writeDataUser(User)
 }
+}
+
+
+package streaming.ui{
 class ExceptionHandler{
     + ExceptionHandler()
     + ExceptionHandler(UI ui)
@@ -130,7 +135,7 @@ class TextUI {
     - final Scanner
     - final UserHandler
 }
-Interface UI {
+interface UI {
     + void library()
     + void login()
     + void loginOrRegister()
@@ -139,18 +144,39 @@ Interface UI {
     + void settings(User)
     + void viewMovie(Media)
 }
-Class Exception
-Class InValidPasswordException{
+}
+
+class Exception
+
+package streaming.exceptions{
+
+class InValidPasswordException{
 + InValidPasswordException(String)
 }
-Class InValidUsername{
+class InValidUsername{
 + InValidUsername(String)
 }
-Class InValidPasswordOrPasswordException{
+class InValidPasswordOrPasswordException{
 + InValidPasswordOrPasswordException(String)
 }
+}
 
-
+package streaming.util{
+abstract class StringUtil{
+    + {static} boolean containsIgnoreCase(String, String)
+}
+}
+}
+class Streaming{
++ {static}UserHandler userHandler
++ {static} TextUI UI
++ {static} MediaHandler mediaHandler
++ {static} IO io
++ {static} ExceptionHandler exceptionHandler
++ {static} void main (String)
+- {static} void setup()
++ {static} User getCurrentUser()
+}
 
 Streaming *-- UserHandler
 UserHandler *-- User
@@ -174,7 +200,7 @@ Exception <|-- InValidPasswordException
 Exception <|-- InValidUsername
 Exception <|-- InValidPasswordOrPasswordException
 
-
+MediaHandler o-- StringUtil
 
 
 
