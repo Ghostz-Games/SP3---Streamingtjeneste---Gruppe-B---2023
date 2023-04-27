@@ -4,17 +4,19 @@ package streaming.mediaHandler;
 import java.util.ArrayList;
 
 import streaming.users.User;
-import streaming.io.FileIO;
 import streaming.io.IO;
+
+import static streaming.util.StringUtil.containsIgnoreCase;
+
 public class MediaHandler {
 
 
     private ArrayList<Media> media = new ArrayList<Media>();
-
+    private Media currentMedia;
     private User currentUser;
     private IO io;
 
-    public MediaHandler(FileIO io,User currentUser){
+    public MediaHandler(IO io,User currentUser){
         this.io = io;
         this.currentUser = currentUser;
     }
@@ -72,7 +74,7 @@ public class MediaHandler {
 
         if(name != null){
             for(int i = output.size() - 1 ; i >= 0; i--){
-                if(!output.get(i).getName().contains(name)){
+                if(!containsIgnoreCase(output.get(i).getName(),name)){
                     output.remove(i);
                 }
             }
@@ -80,7 +82,7 @@ public class MediaHandler {
 
         if(genre != null){
             for(int i = output.size() - 1 ; i >= 0; i--){
-                if(!output.get(i).getGenre().contains(genre)){
+                if(!containsIgnoreCase(output.get(i).getGenre(),genre)){
                     output.remove(i);
                 }
             }
@@ -88,7 +90,7 @@ public class MediaHandler {
 
         if(year != null){
             for(int i = output.size() - 1 ; i >= 0; i--){
-                if(!output.get(i).getYear().contains(genre)){
+                if(!containsIgnoreCase(output.get(i).getYear(), year)){
                     output.remove(i);
                 }
             }
@@ -130,7 +132,7 @@ public class MediaHandler {
         return searchMedia(null, null, null, a, b);
     }
 
-    public static String InlineListString(ArrayList<Media> liste){
+    public static String inLineListString(ArrayList<Media> liste){
         if(liste == null){
             return "";
         }
@@ -141,4 +143,18 @@ public class MediaHandler {
         return sb.toString();
     }
 
+    public Media getCurrentMedia() {
+        return currentMedia;
+    }
+
+    public void selectMedia(Media media){
+        this.currentMedia = media;
+    }
+    public void selectMedia(String name){
+        for(int i = 0; i < media.size();i++){
+            if(media.get(i).getName().equalsIgnoreCase(name)){
+                currentMedia = media.get(i);
+            }
+        }
+    }
 }
