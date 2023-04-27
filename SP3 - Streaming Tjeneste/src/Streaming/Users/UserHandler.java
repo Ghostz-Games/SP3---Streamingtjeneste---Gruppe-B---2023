@@ -1,12 +1,11 @@
 package streaming.users;
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import streaming.exceptions.InValidUsernameOrPasswordException;
 import streaming.io.IO;
 import streaming.exceptions.InValidPasswordException;
-import streaming.exceptions.InValidUsername;
+import streaming.exceptions.InValidUsernameException;
 import streaming.mediaHandler.Media;
 import streaming.mediaHandler.MediaHandler;
 
@@ -74,14 +73,14 @@ public class UserHandler {
             }
         }
     }
-    protected boolean isValidUsername(String name) throws InValidUsername{
+    protected boolean isValidUsername(String name) throws InValidUsernameException {
         if(name.length() <= 3){
-           throw new InValidUsername("invalid Username; must be longer than 3");
+           throw new InValidUsernameException("invalid Username; must be longer than 3");
         }
         if(!users.isEmpty()) {
             for (int i = 0; i < users.size(); i++) {
                 if (name.equalsIgnoreCase((users.get(i).getUsername()))) {
-                    throw new InValidUsername("invalid Username; its already in use");
+                    throw new InValidUsernameException("invalid Username; its already in use");
                 }
             }
         }
@@ -102,13 +101,13 @@ public class UserHandler {
             }
             throw new InValidPasswordException("Password is not valid, must contain atleast 1 special, 1 upper and lower case letter, and be longer than 8 characters");
     }
-    public void changeUsername(String name) throws InValidUsername {
+    public void changeUsername(String name) throws InValidUsernameException {
         try {
             if (isValidUsername(name)) {
                 this.currentUser.setUsername(name);
             }
-        }catch (InValidUsername e){
-            throw new InValidUsername(e.getMessage());
+        }catch (InValidUsernameException e){
+            throw new InValidUsernameException(e.getMessage());
         }
     }
     public void save(){

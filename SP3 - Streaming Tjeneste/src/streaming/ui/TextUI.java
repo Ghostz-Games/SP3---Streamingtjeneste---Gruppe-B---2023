@@ -44,6 +44,7 @@ public class TextUI implements UI {
             scan.nextLine();
             return scanInt;
         }
+        scan.nextLine();
         return Integer.MIN_VALUE;
     }
 

@@ -1,9 +1,6 @@
 package streaming.ui;
 
 
-import streaming.io.FileIO;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 
 import streaming.exceptions.*;
@@ -23,7 +20,7 @@ public class ExceptionHandler {
             System.out.println("File not Found");
         }else if (e instanceof InValidPasswordException) {
             System.out.println(e.getMessage());
-        } else if(e instanceof InValidUsername){
+        } else if(e instanceof InValidUsernameException){
             System.out.println(e.getMessage());
         } else if(e instanceof InValidUsernameOrPasswordException){
             System.out.println(e.getMessage());
