@@ -2,6 +2,8 @@ package streaming.ui;
 
 import streaming.exceptions.InValidPasswordException;
 import streaming.exceptions.InValidUsernameException;
+import streaming.io.DBIO;
+import streaming.io.IO;
 
 import java.io.FileNotFoundException;
 
@@ -19,5 +21,17 @@ class ExceptionHandlerTest {
         ged.catchException(ie3);
         ged.catchException(ie4);
 
+    }
+
+    @org.junit.jupiter.api.Test
+    void testDBFilm() {
+        IO io = new DBIO();
+        try {
+            for(String s : io.readDataMedia()){
+                System.out.println(s);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
