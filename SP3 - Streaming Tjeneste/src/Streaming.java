@@ -1,4 +1,5 @@
 
+import streaming.io.FileIO;
 import streaming.io.db.DBIO;
 import streaming.io.IO;
 import streaming.mediaHandler.MediaHandler;
@@ -11,13 +12,20 @@ import streaming.ui.TextUI;
 
 public class Streaming {
 
-    public static IO io = new DBIO();
+    public static IO io;
     public static UserHandler userHandler;
     public static MediaHandler mediaHandler;
     public static UI textUI;
     public static ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     public static void main(String[] args) {
+        textUI = new TextUI(null,null);
+        if(textUI.getUserInput("local or DB?").equals("DB")){
+            io = new DBIO();
+        } else {
+            io = new FileIO();
+        }
+
         setup();
 
         //debug();
