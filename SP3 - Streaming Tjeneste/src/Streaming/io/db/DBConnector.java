@@ -10,7 +10,7 @@ class DBConnector {
 
     //  Database credentials
     static final String USER = "root";
-    static final String PASS = "Admin!1000";
+    static final String PASS = "Over4you!";
 
     public static Connection getConn() {
         Connection conn = null;
