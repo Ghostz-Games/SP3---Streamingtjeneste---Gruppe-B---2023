@@ -4,7 +4,7 @@ import streaming.mediaHandler.Media;
 import streaming.users.User;
 
 public interface UI {
-
+    String askLocalOrDB();
     void loginOrRegister();
     void login();
     void registerUser();
