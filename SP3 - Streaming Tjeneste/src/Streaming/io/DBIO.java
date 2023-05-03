@@ -11,11 +11,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 class DBConnector {
     // database URL
-    static final String DB_URL = "jdbc:mysql://localhost/world";
+    static final String DB_URL = "jdbc:mysql://localhost/streaming";
 
     //  Database credentials
     static final String USER = "root";
-    static final String PASS = "Admin!1000";
+    static final String PASS = "Over4you!";
 
     public static Connection getConn() {
         Connection conn = null;
