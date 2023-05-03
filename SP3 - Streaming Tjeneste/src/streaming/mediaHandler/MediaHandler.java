@@ -4,6 +4,7 @@ package streaming.mediaHandler;
 import java.util.ArrayList;
 
 import streaming.io.IO;
+import streaming.io.db.DBIO;
 
 import static streaming.util.StringUtil.containsIgnoreCase;
 
@@ -60,7 +61,41 @@ public class MediaHandler {
 
 
     public ArrayList<Media> searchMedia(ArrayList<Media> media, String name, String genre, String year, float min, float max) {
-        ArrayList<Media> output = new ArrayList<Media>(media);
+        ArrayList<Media> output;
+        if(io instanceof DBIO){
+            output = new ArrayList<>();
+            ArrayList<String> mediaStrings = ((DBIO) io).searchMedia(name,genre,year,min,max);
+            for (String s: mediaStrings) {
+                String[] line = s.split(";",-1);
+                if(line.length == 5){ //// = serier
+                    String sname = line[0];
+                    String syear = line[1];
+                    String sgenre = line[2];
+                    String srating = line[3].replace(",",".");;
+                    String episodes = line[4];
+                    String[] seasons = episodes.split(",");
+                    int epsum =0;
+                    ArrayList<Integer> seasonsList = new ArrayList<>();
+                    for(int i = 0; i < seasons.length; i++){
+                        int episodeCount = Integer.parseInt(seasons[i].split("-")[1]);
+                        epsum += episodeCount;
+                        seasonsList.add(episodeCount);
+                    }
+
+                    output.add(new Series(sname, sgenre, Float.parseFloat(srating), epsum, syear, seasonsList));
+
+                } else { //// = film
+                    String fname = line[0];
+                    String fyear = line[1];
+                    String fgenre = line[2];
+                    String frating = line[3].replace(",",".");
+
+                    output.add(new Movie(fname, fgenre, Float.parseFloat(frating), fyear, 120));
+                }
+            }
+            return output;
+        }
+        output = new ArrayList<Media>(media);
         if(name != null){
             for(int i = output.size() - 1 ; i >= 0; i--){
                 if(!containsIgnoreCase(output.get(i).getName(),name)){
