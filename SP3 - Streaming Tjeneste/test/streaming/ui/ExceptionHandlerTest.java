@@ -2,7 +2,7 @@ package streaming.ui;
 
 import streaming.exceptions.InValidPasswordException;
 import streaming.exceptions.InValidUsernameException;
-import streaming.io.DBIO;
+import streaming.io.db.DBIO;
 import streaming.io.IO;
 
 import java.io.FileNotFoundException;
