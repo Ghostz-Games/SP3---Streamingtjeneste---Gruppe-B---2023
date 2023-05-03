@@ -1,0 +1,4 @@
+name; password; ID; isAdult; isAdmin; watched; saved;
+Patrick; Ersupersej64!; 1; true; true; NULL; Titanic,Luke Cage;
+root; Admin!1000; 2; false; false; NULL; NULL;
+Patrick2; fdbvsvsdfsdsgAS2131!; 3; true; false; NULL; Titanic;

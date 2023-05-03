@@ -1,4 +1,5 @@
 
+import streaming.io.DBIO;
 import streaming.io.IO;
 import streaming.mediaHandler.MediaHandler;
 import streaming.ui.ExceptionHandler;
@@ -11,7 +12,7 @@ import streaming.ui.TextUI;
 
 public class Streaming {
 
-    public static IO io = new FileIO();
+    public static IO io = new DBIO();
     public static UserHandler userHandler;
     public static MediaHandler mediaHandler;
     public static UI textUI;
