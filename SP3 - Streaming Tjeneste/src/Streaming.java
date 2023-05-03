@@ -1,11 +1,10 @@
 
-import streaming.io.DBIO;
+import streaming.io.db.DBIO;
 import streaming.io.IO;
 import streaming.mediaHandler.MediaHandler;
 import streaming.ui.ExceptionHandler;
 import streaming.ui.UI;
 import streaming.users.UserHandler;
-import streaming.io.FileIO;
 import streaming.users.User;
 import streaming.ui.TextUI;
 

@@ -1,46 +1,13 @@
-package streaming.io;
+package streaming.io.db;
 
 import streaming.io.IO;
+import streaming.mediaHandler.Media;
 import streaming.users.User;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
-
-class DBConnector {
-    // database URL
-    static final String DB_URL = "jdbc:mysql://localhost/streaming";
-
-    //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "Over4you!";
-
-    public static Connection getConn() {
-        Connection conn = null;
-        try {
-            //STEP 1: Register JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            //Class.forName("com.mysql.jdbc.Driver");
-
-            //STEP 2: Open a connection
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            return conn;
-            //STEP 5: Clean-up environment
-            //rs.close();
-            //stmt.close();
-            //conn.close();
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        }
-        return null;
-    }
-}
 
 public class DBIO implements IO {
     @Override
@@ -69,7 +36,7 @@ public class DBIO implements IO {
             try {
                 if (stmt != null)
                     stmt.close();
-            } catch (SQLException se2) {
+            } catch (SQLException ignore) {
             }// nothing we can do
             try {
                 if (conn != null)
@@ -135,7 +102,21 @@ public class DBIO implements IO {
         ArrayList<String> output = new ArrayList<>();
         try {
             while(rs.next()){
-                output.add((rs.getString("username").trim() + ";" + rs.getString("password").trim() + ";" + rs.getInt("ID") + ";" + rs.getString("isAdult").trim() + ";" + rs.getString("isAdmin").trim() + ";" + rs.getString("saved").trim() + ";" + rs.getString("watched")).trim().replace("null",""));
+                String watched = rs.getString("watched");
+                if(watched != null) {
+                    watched = watched.trim();
+                }
+                if(watched == "null") {
+                    watched = "";
+                }
+                String saved = rs.getString("saved");
+                if(saved != null) {
+                    saved = saved.trim();
+                }
+                if(saved == "null") {
+                    saved = "";
+                }
+                output.add((rs.getString("username").trim() + ";" + rs.getString("password").trim() + ";" + rs.getInt("ID") + ";" + rs.getString("isAdult").trim() + ";" + rs.getString("isAdmin").trim() + ";" + saved + ";" + watched));
             }
             rs.close();
         } catch (SQLException e){
@@ -164,9 +145,49 @@ public class DBIO implements IO {
         ResultSet rs = null;
         conn = DBConnector.getConn();
         try {
-            String sql = "update streaming.users set saved = \"" + currentUser.getSavedMedia() + "\", watched = \"" + currentUser.getWatchedMedia() + "\"";
+            String sql = "select count(*) from streaming.users where username = \"" + currentUser.getUsername() + "\"";
             stmt = conn.prepareStatement(sql);
-            stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
+            if(rs.next() && rs.getInt("count(*)") > 0) {
+                rs.close();
+                sql = "update streaming.users set saved = \"" + currentUser.getSavedMedia() + "\", watched = \"" + currentUser.getWatchedMedia() + "\"";
+                stmt = conn.prepareStatement(sql);
+                stmt.executeUpdate(sql);
+            } else {
+                rs.close();
+                String watched = "\"";
+                String saved = "\"";
+                for(int i = 0; i < currentUser.getWatchedMedia().size(); ++i){
+                    watched += currentUser.getWatchedMedia().get(i).getName();
+                    if(i < currentUser.getWatchedMedia().size()-1){
+                        watched += ",";
+                    }
+                }
+                watched += "\"";
+                for(int i = 0; i < currentUser.getSavedMedia().size(); ++i){
+                    saved += currentUser.getSavedMedia().get(i).getName();
+                    if(i < currentUser.getSavedMedia().size()-1){
+                        saved += ",";
+                    }
+                }
+                saved += "\"";
+                sql = "insert into streaming.users \n" +
+                        "(`username`,\n" +
+                        "`password`,\n" +
+                        "`isAdult`,\n" +
+                        "`isAdmin`,\n" +
+                        "`watched`,\n" +
+                        "`saved`) values (" +
+                        "\"" + currentUser.getUsername() + "\",\n" +
+                        "\"" + currentUser.getPassword() + "\",\n"  +
+                        "\"" + currentUser.isAdult() + "\",\n"  +
+                        "\"false\"" + ",\n"  +
+                        watched + ",\n"  +
+                        saved +
+                        ")";
+                stmt = conn.prepareStatement(sql);
+                stmt.executeUpdate(sql);
+            }
         } catch (SQLException e){
             e.printStackTrace();
         }

@@ -149,7 +149,7 @@ public class TextUI implements UI {
 
                 break;
             case 0:
-                System.out.println("goodbye obi wan kenobi");
+                System.out.println("goodbye " + userHandler.getCurrentUser().getUsername());
                 System.exit(0);
 
             default:
