@@ -19,8 +19,8 @@ public class Streaming {
     public static ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     public static void main(String[] args) {
-
-        if(textUI.askLocalOrDB().equals("DB")){
+        textUI = new TextUI(null,null);
+        if(textUI.getUserInput("local or DB?").equals("DB")){
             io = new DBIO();
         } else {
             io = new FileIO();
