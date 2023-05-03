@@ -135,7 +135,7 @@ public class DBIO implements IO {
         ArrayList<String> output = new ArrayList<>();
         try {
             while(rs.next()){
-                output.add((rs.getString("username").trim() + ";" + rs.getString("password").trim() + ";" + rs.getInt("ID") + ";" + rs.getString("isAdult").trim() + ";" + rs.getString("isAdmin").trim() + ";" + rs.getString("saved") + ";" + rs.getString("watched")).replace("null",""));
+                output.add((rs.getString("username").trim() + ";" + rs.getString("password").trim() + ";" + rs.getInt("ID") + ";" + rs.getString("isAdult").trim() + ";" + rs.getString("isAdmin").trim() + ";" + rs.getString("saved").trim() + ";" + rs.getString("watched")).trim().replace("null",""));
             }
             rs.close();
         } catch (SQLException e){
@@ -166,7 +166,7 @@ public class DBIO implements IO {
         try {
             String sql = "update streaming.users set saved = \"" + currentUser.getSavedMedia() + "\", watched = \"" + currentUser.getWatchedMedia() + "\"";
             stmt = conn.prepareStatement(sql);
-            rs = stmt.executeQuery(sql);
+            stmt.executeQuery(sql);
         } catch (SQLException e){
             e.printStackTrace();
         }
