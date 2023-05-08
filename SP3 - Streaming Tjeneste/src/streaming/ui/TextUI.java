@@ -55,18 +55,23 @@ public class TextUI implements UI {
 
     @Override
     public void loginOrRegister(){
-        displayMessage("Hello user, please choose to login or register a user");
-        displayMessage("Press '1' to login");
-        displayMessage("Press '2' to register a user");
-        if(scan.hasNextInt()){
-            switch (scan.nextInt()) {
-                case 1 -> {
-                    scan.nextLine();
-                    login();
-                }
-                case 2 -> {
-                    scan.nextLine();
-                    registerUser();
+        boolean exit = false;
+        while(!exit) {
+            displayMessage("Hello user, please choose to login or register a user");
+            displayMessage("Press '1' to login");
+            displayMessage("Press '2' to register a user");
+            if (scan.hasNextInt()) {
+                switch (scan.nextInt()) {
+                    case 1 -> {
+                        scan.nextLine();
+                        login();
+                        exit = true;
+                    }
+                    case 2 -> {
+                        scan.nextLine();
+                        registerUser();
+                        exit = true;
+                    }
                 }
             }
         }
@@ -98,16 +103,20 @@ public class TextUI implements UI {
 
     @Override
     public void login() {
-        displayMessage("Please insert your login credentials below:");
+        boolean exit = false;
+        while(!exit) {
+            displayMessage("Please insert your login credentials below:");
 
-        String usernameInput = getUserInput("Please type your username:");
-        String passwordInput = getUserInput("Please type your password");
+            String usernameInput = getUserInput("Please type your username:");
+            String passwordInput = getUserInput("Please type your password");
 
-        try{
-            userHandler.login(usernameInput, passwordInput);
-        }catch(Exception e){
-            exceptionHandler.catchException(e);
-            login();
+            try {
+                userHandler.login(usernameInput, passwordInput);
+                exit = true;
+            } catch (Exception e) {
+                exceptionHandler.catchException(e);
+                login();
+            }
         }
     }
 
@@ -340,21 +349,25 @@ public class TextUI implements UI {
                         }
                         if (Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) < media.size()) {
                             mediaHandler.selectMedia(media.get(Integer.parseInt(splitInput[1])));
+                            this.viewMovie(mediaHandler.getCurrentMedia());
+                            exit = true;
+                        } else {
+                            System.out.println("there's no media at that index. try again...");
                         }
-                        this.viewMovie(mediaHandler.getCurrentMedia());
-                        exit = true;
                     }
                     case "save", "s" -> {
                         if(splitInput.length == 3){
                             System.out.println("number parameter required example: save 0");
                             break;
                         }
-                        if (Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) <= media.size()) {
+                        if (Integer.parseInt(splitInput[1]) >= 0 && Integer.parseInt(splitInput[1]) < media.size()) {
                             mediaHandler.selectMedia(media.get(Integer.parseInt(splitInput[1])));
+                            userHandler.getCurrentUser().addSavedMedia(mediaHandler.getCurrentMedia());
+                            userHandler.save();
+                            System.out.println(mediaHandler.getCurrentMedia().getName() + " has been saved.");
+                        } else {
+                            System.out.println("there's no media at that index. try again...");
                         }
-                        userHandler.getCurrentUser().addSavedMedia(mediaHandler.getCurrentMedia());
-                        userHandler.save();
-                        System.out.println(mediaHandler.getCurrentMedia().getName() + " has been saved.");
                     }
                     case "search", "sea" -> {
                         this.searchMovieMenu();
